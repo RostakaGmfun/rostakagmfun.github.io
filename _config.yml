@@ -3,7 +3,7 @@ permalink:        pretty
 relative_permalinks: true
 
 # Setup
-title:            Awesome Proger
+title:            Awesome Programmer
 tagline:          RostakaGmfun's blog
 paginate:         1
 baseurl:          /
@@ -16,3 +16,5 @@ author:
 version:          1.0.0
 github:
   repo:           https://github.com/RostakaGmfun/rostakagmfun.github.io
+  
+exclude: [update.sh]
