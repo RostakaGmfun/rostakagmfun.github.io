@@ -102,10 +102,10 @@ Frame::Frame(wxFrame *frame, const wxString& title) //in our constructor we call
 }
 {%endhighlight %}
 
-In our constructor we call `wxFrame` constructor to actually create the window at screen coordinates ``(100;100)``.
-We also call `wxFrame` member function `SetSize()`` to set the window size
-(you also can specify window size in constructor by writing `wxPoint(1024,768)`` instead of `wxDefaultSize`).
-To show our window we should include `main.h` file in `app.cpp` and modify our `App::OnInit()`` function:
+In our constructor we call `wxFrame` constructor to actually create the window at screen coordinates `(100;100).
+We also call `wxFrame` member function `SetSize()` to set the window size
+(you also can specify window size in constructor by writing `wxPoint(1024,768)` instead of `wxDefaultSize`).
+To show our window we should include `main.h` file in `app.cpp` and modify our `App::OnInit()` function:
 
 {% highlight cpp linenos %}
 bool App::OnInit()

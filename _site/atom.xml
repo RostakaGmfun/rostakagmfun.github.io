@@ -4,7 +4,7 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2014-10-20T19:01:30+03:00</updated>
+ <updated>2014-10-20T19:03:03+03:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
@@ -98,10 +98,10 @@ tutorial from it`s Github &lt;a href=&quot;https://github.com/RostakaGmfun/wxWid
 &lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;SetSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;768&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//set the size&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;In our constructor we call &lt;code&gt;wxFrame&lt;/code&gt; constructor to actually create the window at screen coordinates &lt;code&gt;(100;100)&lt;/code&gt;.
-We also call &lt;code&gt;wxFrame&lt;/code&gt; member function &lt;code&gt;SetSize()&lt;/code&gt;&lt;code&gt; to set the window size
-(you also can specify window size in constructor by writing &lt;/code&gt;wxPoint(1024,768)&lt;code&gt;instead of `wxDefaultSize`).
-To show our window we should include `main.h` file in `app.cpp` and modify our `App::OnInit()&lt;/code&gt; function:&lt;/p&gt;
+&lt;p&gt;In our constructor we call &lt;code&gt;wxFrame&lt;/code&gt; constructor to actually create the window at screen coordinates &lt;code&gt;(100;100).
+We also call &lt;/code&gt;wxFrame&lt;code&gt; member function &lt;/code&gt;SetSize()&lt;code&gt; to set the window size
+(you also can specify window size in constructor by writing &lt;/code&gt;wxPoint(1024,768)&lt;code&gt; instead of &lt;/code&gt;wxDefaultSize&lt;code&gt;).
+To show our window we should include &lt;/code&gt;main.h&lt;code&gt; file in &lt;/code&gt;app.cpp&lt;code&gt; and modify our &lt;/code&gt;App::OnInit()` function:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-cpp&quot; data-lang=&quot;cpp&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;OnInit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
