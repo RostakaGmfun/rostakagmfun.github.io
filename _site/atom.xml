@@ -4,7 +4,7 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2014-10-20T19:03:03+03:00</updated>
+ <updated>2014-10-20T19:53:20+03:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>WxWidgets Tutorial</title>
-   <link href="//2014/02/17/wxWidgetsTutorial/"/>
+   <link href="//wxwidgets-tutorial.html"/>
    <updated>2014-02-17T00:00:00+02:00</updated>
-   <id>/2014/02/17/wxWidgetsTutorial</id>
+   <id>/wxWidgetsTutorial</id>
    <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;&lt;em&gt;wxWidgets&lt;/em&gt; is a cross-platform C++ GUI toolkit which provides  an easy and fast way to implement GUI of any complexity.
@@ -551,9 +551,9 @@ Just explore the documentation and Wiki to find out more. For example, &lt;code&
  
  <entry>
    <title>XML file parsing in C++</title>
-   <link href="//2013/10/13/XMLParsing/"/>
+   <link href="//xml-file-parsing-cpp.html"/>
    <updated>2013-10-13T00:00:00+03:00</updated>
-   <id>/2013/10/13/XMLParsing</id>
+   <id>/XMLParsing</id>
    <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;XML files are widely used today so it is great to know how to parse them.&lt;/p&gt;

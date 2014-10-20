@@ -1,6 +1,8 @@
 ---
 layout: post
 title: WxWidgets Tutorial
+permalink: wxwidgets-tutorial.html
+description: wxWidgets is a cross-platform C++ GUI toolkit which provides  an easy and fast way to implement GUI of any complexity. In this tutorial we will compile wxWidgets under Linux and write simple GUI application.
 ---
 
 ## Introduction
