@@ -18,7 +18,7 @@ It is distributed as a collection of header files and can be downloaded from it'
 
 So, lets start. First, we'll just read the contents of the simplest ever xml file:
 
-{% highlight xml lineos %}
+{% highlight xml linenos %}
 <?xml version="1.0" encoding="utf-8"?>
 <root>
     <node1>

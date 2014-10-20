@@ -4,13 +4,141 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2014-10-20T20:02:42+03:00</updated>
+ <updated>2014-10-20T20:43:18+03:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
    <email>rostawesomegd@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Brainfuck programming</title>
+   <link href="//brainfuck-programming.html"/>
+   <updated>2014-09-28T00:00:00+03:00</updated>
+   <id>/brainfuck-programming</id>
+   <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;Brainfuck&lt;/code&gt; is esoteric programming language which was developed in 1993 by Urban Muller.
+It consists of only 8 operators and is not suited for writing practical applications - its purpose is to challenge programmers.&lt;/p&gt;
+
+&lt;h2 id=&quot;interpreter&quot;&gt;Interpreter&lt;/h2&gt;
+
+&lt;p&gt;Writing &lt;code&gt;Brainfuck&lt;/code&gt; interpreter is quite a trivial task, so I have written my own. However, there are a lot of others, so you can pick up any of them.&lt;/p&gt;
+
+&lt;h2 id=&quot;syntax&quot;&gt;Syntax&lt;/h2&gt;
+
+&lt;p&gt;As it was noted above, the syntax of &lt;code&gt;Brainfuck&lt;/code&gt; (&lt;code&gt;BF&lt;/code&gt; for short) consists of 8 operators. Before naming them let’s look on how &lt;code&gt;BF&lt;/code&gt; actually works.
+Operators&lt;/p&gt;
+
+&lt;p&gt;The program consists of sequence of 8 possible operators and are executed one by one in the order they are fed to the interpreter.
+The memory itself consists of (by official design) &lt;code&gt;30k&lt;/code&gt; cells of one-byte size.
+However, different variations exist (like word or double-word cell size and variable number of cells).
+At the start all cells are initialized to &lt;code&gt;0&lt;/code&gt; and the current cell pointer points to the first cell.
+In &lt;code&gt;C&lt;/code&gt; language this can be designated as:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;malloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NUM_CELLS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;memset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NUM_CELLS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Two operators are used to increase and decrease cell pointer:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;gt; means memory++ and
+&amp;lt; means memory--&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Another two operators increment or decrement value at the current cell:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;+  means  *memory++  and
+-  means  *memory--&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Next pair of operators are used for I/O:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;. means &lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;%c&amp;quot;&lt;/span&gt;,memory&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; and
+, means scanf&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;%c&amp;quot;&lt;/span&gt;,memory&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The last pair of operators is the most interesting as they are used for branching:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; is used &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; opening loop block and
+&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; closing it&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The code inside square brackets will be executed until value of current cell won’t be zero:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;         &lt;span class=&quot;cm&quot;&gt;/* execute code */&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;comments&quot;&gt;Comments&lt;/h2&gt;
+
+&lt;p&gt;Any other characters are ignored by Brainfuck interpreter.
+That means, that you can write any text in your Brainfuck program unless it does not contain 8 characters used to mark operators.&lt;/p&gt;
+
+&lt;h2 id=&quot;simple-bf-programs&quot;&gt;Simple BF programs&lt;/h2&gt;
+
+&lt;p&gt;When you are learning new programming language, you probably first write a classic “HelloWorld” program.
+However, displaying string in Brainfuck is not that easy thing as you might think.
+So we will start with such a code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;+++++ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;-&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In this program we first increment current (actually first) cell to &lt;code&gt;5&lt;/code&gt; and then go in a loop which will decrement a value until it reaches &lt;code&gt;0&lt;/code&gt;.
+It isn’t hard to guess that the loop will iterate five times. Let’s look at more complex program which adds two numbers together:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;+++ &amp;gt; +++++ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;-&amp;lt;+&amp;gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;First it sets first cell to &lt;code&gt;3&lt;/code&gt;, than moves on to the next cell and sets it to &lt;code&gt;5&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;3&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;5&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, program enters a loop which iterates until the second cell (with value &lt;code&gt;5&lt;/code&gt;) will be equal to &lt;code&gt;0&lt;/code&gt;.
+In each iteration the value of second cell is decremented and the value of first cell incremented.
+As the program terminates, the value of first cell will be equal to &lt;code&gt;8&lt;/code&gt; and the second cell will be equal to zero:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;8&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Subtraction looks much like addition except one operator:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;** +++++ &amp;gt; ++ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -&amp;lt;-&amp;gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Since multiplication is addition repeated &lt;code&gt;n&lt;/code&gt; times, multiplying two numbers in &lt;code&gt;Brainfuck&lt;/code&gt; is not that hard:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;**+++++  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&amp;gt;++&amp;lt;-&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;**&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;helloworld-program&quot;&gt;HelloWorld Program&lt;/h2&gt;
+
+&lt;p&gt;At last, we get to the famous &lt;code&gt;HelloWorld&lt;/code&gt; program.
+Outputting some text in Brainfuck is a real challenge since you should designate each character with appropriate &lt;code&gt;ASCII&lt;/code&gt; code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; Program to print string &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;     ASCII codes
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;     H &lt;span class=&quot;m&quot;&gt;72&lt;/span&gt; 7*10 plus 2
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;     e &lt;span class=&quot;m&quot;&gt;101&lt;/span&gt; 10*10 plus 1
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;     l &lt;span class=&quot;m&quot;&gt;108&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;101&lt;/span&gt; plus 7
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;     o &lt;span class=&quot;m&quot;&gt;111&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;108&lt;/span&gt; plus 3
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;     _space_ &lt;span class=&quot;m&quot;&gt;32&lt;/span&gt; 4*8
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;     W &lt;span class=&quot;m&quot;&gt;87&lt;/span&gt; 8*10 plus 7
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;     o 111
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;     r &lt;span class=&quot;m&quot;&gt;114&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;111&lt;/span&gt; plus 3
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;     l 108
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;     d &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; 10*10
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;     ! &lt;span class=&quot;m&quot;&gt;33&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;32&lt;/span&gt; plus 1
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;     newline 10
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;     +++++ ++ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&amp;gt; +++++ +++++ &amp;lt;-&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &amp;gt;++. print H
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;     &amp;gt; +++++ +++++ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&amp;gt; +++++ +++++ &amp;lt;-&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &amp;gt;+. print e
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt;     +++++ ++ .. print ll
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;     +++ . print o
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt;     &amp;gt; ++++ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&amp;gt; +++++ +++ &amp;lt;-&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &amp;gt;. print space
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;     &amp;gt; +++++ +++ &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&amp;gt; +++++ +++++ &amp;lt;-&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &amp;gt; +++++ ++ . print W
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;&amp;lt; . print o
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt;     +++ . print r
+&lt;span class=&quot;lineno&quot;&gt;24&lt;/span&gt;     ----- - . print l
+&lt;span class=&quot;lineno&quot;&gt;25&lt;/span&gt;     ----- --- . print d
+&lt;span class=&quot;lineno&quot;&gt;26&lt;/span&gt;     &amp;gt;&amp;gt;+. print !&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Brainfuck is really interesting programming language which makes you think out of the box,
+especially while solving complex tasks and optimizing your programs.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>WxWidgets Tutorial</title>
@@ -565,12 +693,12 @@ It is distributed as a collection of header files and can be downloaded from it�
 
 &lt;p&gt;So, lets start. First, we’ll just read the contents of the simplest ever xml file:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;root&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;node1&amp;gt;&lt;/span&gt;
-        Contents of node 1
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/node1&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;root&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;nt&quot;&gt;&amp;lt;node1&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;         Contents of node 1
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/node1&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Open your favourite text editor or IDE and let’s do some coding:&lt;/p&gt;
 
