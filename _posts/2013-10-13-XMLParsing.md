@@ -6,6 +6,7 @@ description: XML files are widely used today so it is great to know how to parse
 tags: [c++, xml, rapidxml, parsing]
 keywords: c++, xml, rapidxml, parsing
 categories: [c++]
+comments: true
 ---
 
 ## Introduction

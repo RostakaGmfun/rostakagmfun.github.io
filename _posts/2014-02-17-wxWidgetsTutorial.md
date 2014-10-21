@@ -6,6 +6,7 @@ description: wxWidgets is a cross-platform C++ GUI toolkit which provides  an ea
 tags: [c++, GUI, wxWidgets]
 keywords: c++, GUI, wxWidgets
 categories: [c++, GUI]
+comments: true
 ---
 
 ## Introduction

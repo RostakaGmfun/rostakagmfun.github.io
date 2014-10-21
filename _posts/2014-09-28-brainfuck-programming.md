@@ -6,6 +6,7 @@ description: Brainfuck is esoteric programming language which was developed in 1
 tags: [esolang, brainfuck]
 keywords: esolang, brainfuck
 categories: [brainfuck]
+comments: true
 ---
 
 ## Introduction

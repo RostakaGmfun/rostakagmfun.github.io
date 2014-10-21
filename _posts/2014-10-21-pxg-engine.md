@@ -6,6 +6,7 @@ description: In this article I will highlight main problems of my own game engin
 tags: [c++, code design, game engine]
 keywords: c++, code design, game engine
 categories: [c++, code design, game engine]
+comments: true
 ---
 
 ## Introduction
@@ -62,10 +63,10 @@ As there were no higher-level abstractions for vertex arrays and draw calls,
 the same code should be written again and again every time you implement new renderable object (e.g. terrain, HUD object, particle system and so on).
 
 ## OS abstractions and math library
-In short, there are no OS abstractions in PixelGear. I thought i don't need them.
+In short, there are no OS abstractions in PixelGear. I thought I don't need them.
 In fact, I didn't need them while deploying the engine only on my development system (Linux).
 As for the math library, which is really important part of 3D rendering system,
-I have used really robust [GLM](http://glm.g-truc.net/) - OpenGL Mat Library, which mimics GLSL syntax and is really fast.
+I have used really robust [GLM](http://glm.g-truc.net/) - OpenGL Math Library, which mimics GLSL syntax and is really fast.
 However, in my engine only the small part of this great library was used. As `GLM` used C++ templates intensively, it slowed down compilation of the engine.
 That is why it is good idea to write your own math library to fit particular purposes.
 The same with standard C++ library - it slows things down both at compile time and runtime - that is why it is good to write your own containers and string classes.

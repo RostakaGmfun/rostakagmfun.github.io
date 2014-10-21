@@ -162,10 +162,10 @@ As there were no higher-level abstractions for vertex arrays and draw calls,
 the same code should be written again and again every time you implement new renderable object (e.g. terrain, HUD object, particle system and so on).</p>
 
 <h2 id="os-abstractions-and-math-library">OS abstractions and math library</h2>
-<p>In short, there are no OS abstractions in PixelGear. I thought i don’t need them.
+<p>In short, there are no OS abstractions in PixelGear. I thought I don’t need them.
 In fact, I didn’t need them while deploying the engine only on my development system (Linux).
 As for the math library, which is really important part of 3D rendering system,
-I have used really robust <a href="http://glm.g-truc.net/">GLM</a> - OpenGL Mat Library, which mimics GLSL syntax and is really fast.
+I have used really robust <a href="http://glm.g-truc.net/">GLM</a> - OpenGL Math Library, which mimics GLSL syntax and is really fast.
 However, in my engine only the small part of this great library was used. As <code>GLM</code> used C++ templates intensively, it slowed down compilation of the engine.
 That is why it is good idea to write your own math library to fit particular purposes.
 The same with standard C++ library - it slows things down both at compile time and runtime - that is why it is good to write your own containers and string classes.</p>
@@ -245,6 +245,20 @@ The same with standard C++ library - it slows things down both at compile time a
     
   </ul>
 </aside>
+
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'My own game engine or why I have given up writing it'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
 
       </div>
     </div>
