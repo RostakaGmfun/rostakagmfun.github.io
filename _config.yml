@@ -16,5 +16,8 @@ author:
 version:          1.0.0
 github:
   repo:           https://github.com/RostakaGmfun/rostakagmfun.github.io
+description:      The diary of awesome programmer and cool guy. Programming, 3d graphics, c++, game developing
+desc:             The diary of awesome programmer and cool guy.
+keywords:         programming, 3d graphics, c++, game developing, OpenGL
 
 exclude: [update.sh]

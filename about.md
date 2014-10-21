@@ -7,3 +7,5 @@ I am hobbyist programmer from Kyiv, Ukraine, who is interested mainly in C++ pro
 ##Links
 * [Twitter](https://twitter.com/RostakaGmfun)
 * [GitHub](https://github.com/RostakaGmfun)
+
+Gmail address: rostawesomegd@gmail.com

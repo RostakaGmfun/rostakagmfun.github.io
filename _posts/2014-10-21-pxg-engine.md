@@ -4,6 +4,7 @@ title: My own game engine or why I have given up writing it
 permalink: pxg-engine-design.html
 description: In this article I will highlight main problems of my own game engine and explain why good software design is so important.
 tags: [c++, code design, game engine]
+keywords: c++, code design, game engine
 categories: [c++, code design, game engine]
 ---
 

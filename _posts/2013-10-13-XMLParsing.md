@@ -4,6 +4,7 @@ title: XML file parsing in C++
 permalink: xml-file-parsing-cpp.html
 description: XML files are widely used today so it is great to know how to parse them. One good XML file parsing library is rapidxml. It is distributed as a collection of header files and can be downloaded from it's official site.
 tags: [c++, xml, rapidxml, parsing]
+keywords: c++, xml, rapidxml, parsing
 categories: [c++]
 ---
 
