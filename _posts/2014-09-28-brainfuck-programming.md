@@ -3,8 +3,8 @@ layout: post
 title: Brainfuck programming
 permalink: brainfuck-programming.html
 description: Brainfuck is esoteric programming language which was developed in 1993 by Urban Muller. It consists of only 8 operators and is not suited for writing practical applications - its purpose is to challenge programmers.
-tags: [programming, tutorial, esolang, brainfuck]
-categories: [tutorial, programming]
+tags: [esolang, brainfuck]
+categories: [brainfuck]
 ---
 
 ## Introduction

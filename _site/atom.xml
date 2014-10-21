@@ -4,13 +4,124 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2014-10-20T20:43:18+03:00</updated>
+ <updated>2014-10-21T11:39:49+03:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
    <email>rostawesomegd@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>My own game engine or why I have given up writing it</title>
+   <link href="//pxg-engine-design.html"/>
+   <updated>2014-10-21T00:00:00+03:00</updated>
+   <id>/pxg-engine</id>
+   <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;I have been writing my own game engine since February till August this year.
+The reason why I have given up writing it is self-evident if you look at it’s code.
+Most of all, the engine suffers from bad OO design. As the size of code has grown, it became really painful to add new features and fix bugs.
+The main reasons for why this hell happened are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I haven’t known much about OO patterns&lt;/li&gt;
+  &lt;li&gt;I was writing 3D engine for the first time, that is why I have concentrated on features rather than on clear code design&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Things changed rapidly when I have started reading &lt;a href=&quot;http://www.headfirstlabs.com/books/hfdp/&quot;&gt;Head First: Design Patterns&lt;/a&gt;.
+I understood the mistakes I have made while writing my engine and in this article
+I’m going to highlight some of the biggest mistakes in PixelGear Engine.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-main-class&quot;&gt;The main class&lt;/h2&gt;
+&lt;p&gt;Though I was targeting to eventually develop cross platform engine, it’s code design really wasn’t ready for this.
+First of all, the whole window and context management boilerplate were encapsulated in single &lt;code&gt;pxgEngine&lt;/code&gt; class.
+Getting user input, creating window and context, counting frames per second made the &lt;code&gt;pxgEngine&lt;/code&gt; class a real mess.
+Furthermore, the HUD system was also somewhat dependent on &lt;code&gt;pxgEngine&lt;/code&gt; class, since you should call &lt;code&gt;pxgEngine::setHUDManager()&lt;/code&gt; to enable HUD rendering.&lt;/p&gt;
+
+&lt;script src=&quot;http://gist-it.appspot.com/https://github.com/RostakaGmfun/PixelGearEngine/blob/master/include/PXG.h?slice=30:74&quot;&gt;&lt;/script&gt;
+
+&lt;h2 id=&quot;node-system&quot;&gt;Node system&lt;/h2&gt;
+&lt;p&gt;By initial concept both 3D objects and scenes in my engine should inherit an abstract &lt;code&gt;pxgNode&lt;/code&gt; class.
+This class should provide parent-child relations management, spatial transformations and object name handling.
+In addition, &lt;code&gt;pxgNode&lt;/code&gt; class included pure virtual functions for updating, rendering, and destroying nodes.
+However, this system was implemented badly at the beginning and was totally broken as the number of objects has grown.
+One of the numerous problems of &lt;code&gt;pxgNode&lt;/code&gt; was &lt;code&gt;UpdateTransformation()&lt;/code&gt; function.
+It updates the world matrix from scale, translation and rotation vectors and is meant to be called in &lt;code&gt;Update()&lt;/code&gt; pure virtual function.
+Now I can say, that such system should have been implemented with &lt;a href=&quot;http://en.wikipedia.org/wiki/Template_method_pattern&quot;&gt;Template Method Pattern&lt;/a&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;http://gist-it.appspot.com/https://github.com/RostakaGmfun/PixelGearEngine/blob/master/include/pxgNode.h?slice=14:44&quot;&gt;&lt;/script&gt;
+
+&lt;h2 id=&quot;world&quot;&gt;World&lt;/h2&gt;
+&lt;p&gt;At the beginning the world system was meant to be a special scene, but later it turned into rather
+big class with many methods and HAS-A relationships with other engine classes.
+The inheritance of &lt;code&gt;pxgWorld&lt;/code&gt; from &lt;code&gt;pxgNode&lt;/code&gt; was not required at all. &lt;code&gt;pxgWorld&lt;/code&gt; managed physics,
+background, post-processing and object picking systems completely or partially on its own.
+In fact, this class needed complete redesign most of all among other engine classes.&lt;/p&gt;
+
+&lt;script src=&quot;http://gist-it.appspot.com/https://github.com/RostakaGmfun/PixelGearEngine/blob/master/include/pxgWorld.h?slice=26:62&quot;&gt;&lt;/script&gt;
+
+&lt;h2 id=&quot;pxgobject-and-friends&quot;&gt;pxgObject and friends&lt;/h2&gt;
+&lt;p&gt;This class was used to render both 3D models an 3D sprites;
+it also used its own system for child mesh management (despite inheriting from &lt;code&gt;pxgNode&lt;/code&gt;.
+In fact, &lt;code&gt;pxgNode&lt;/code&gt;s parent-child system was not used by any class in the engine).
+Although &lt;code&gt;pxgObject&lt;/code&gt; used high-level engine classes for shader, buffer and texture management,
+the &lt;code&gt;pxgObject.cpp&lt;/code&gt; contains direct OpenGL calls (to manage vertex array and actually render the object).
+You should not be a professional programmer to note that &lt;code&gt;pxgObject&lt;/code&gt; system was completely wrong.
+&lt;script style=&quot;overflow:auto&quot; src=&quot;http://gist-it.appspot.com/https://github.com/RostakaGmfun/PixelGearEngine/blob/master/src/pxgObject.cpp?slice=254:344&quot;&gt;&lt;/script&gt;
+As there were no higher-level abstractions for vertex arrays and draw calls,
+the same code should be written again and again every time you implement new renderable object (e.g. terrain, HUD object, particle system and so on).&lt;/p&gt;
+
+&lt;h2 id=&quot;os-abstractions-and-math-library&quot;&gt;OS abstractions and math library&lt;/h2&gt;
+&lt;p&gt;In short, there are no OS abstractions in PixelGear. I thought i don’t need them.
+In fact, I didn’t need them while deploying the engine only on my development system (Linux).
+As for the math library, which is really important part of 3D rendering system,
+I have used really robust &lt;a href=&quot;http://glm.g-truc.net/&quot;&gt;GLM&lt;/a&gt; - OpenGL Mat Library, which mimics GLSL syntax and is really fast.
+However, in my engine only the small part of this great library was used. As &lt;code&gt;GLM&lt;/code&gt; used C++ templates intensively, it slowed down compilation of the engine.
+That is why it is good idea to write your own math library to fit particular purposes.
+The same with standard C++ library - it slows things down both at compile time and runtime - that is why it is good to write your own containers and string classes.&lt;/p&gt;
+
+&lt;h2 id=&quot;engine-features&quot;&gt;Engine Features&lt;/h2&gt;
+&lt;p&gt;Event though PixelGear engine suffered from bad OO design, it has some features. Here is full feature list of my engine&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Loading meshes with materials from Wavefront OBJ format ( tested with Blender exporter )&lt;/li&gt;
+    &lt;li&gt;Loading textures from various image formats ( powered by SOIL )&lt;/li&gt;
+    &lt;li&gt;Compiling vertex, geometry and fragment shaders&lt;/li&gt;
+    &lt;li&gt;Shader system, which supports basic stuff for developing your own shaders ( uniforms, attributes and textures )&lt;/li&gt;
+    &lt;li&gt;Shader library which provides basic shaders&lt;/li&gt;
+    &lt;li&gt;Simple lighting system&lt;/li&gt;
+    &lt;li&gt;Cube and plane meshes&lt;/li&gt;
+    &lt;li&gt;Skyboxes&lt;/li&gt;
+    &lt;li&gt;Keyboard and mouse input&lt;/li&gt;
+    &lt;li&gt;Simple ( yet buggy ) terrain system&lt;/li&gt;
+    &lt;li&gt;Post processing ( WIP )&lt;/li&gt;
+    &lt;li&gt;Object picking&lt;/li&gt;
+    &lt;li&gt;Blender exporter plugin in custom format ( WIP )&lt;/li&gt;
+    &lt;li&gt;2D textures and text rendering&lt;/li&gt;
+    &lt;li&gt;Rigid body dynamics ( powered by Bullet )&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;At last, here are some screenshots and videos:&lt;/p&gt;
+
+&lt;h3 id=&quot;terrain-demo&quot;&gt;Terrain demo&lt;/h3&gt;
+&lt;iframe width=&quot;570&quot; height=&quot;340&quot; src=&quot;//www.youtube.com/embed/FogCR0x93Zg?list=UU1VEk32Dv8l49nlaIclDyAw&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h3 id=&quot;physics-demo&quot;&gt;Physics demo&lt;/h3&gt;
+&lt;iframe width=&quot;570&quot; height=&quot;340&quot; src=&quot;//www.youtube.com/embed/xiy6hlL0nYE?list=UU1VEk32Dv8l49nlaIclDyAw&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h3 id=&quot;screenshots&quot;&gt;Screenshots&lt;/h3&gt;
+&lt;p&gt;An effort to write a game&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/pxg-engine-design/gamedev-effort.png&quot; alt=&quot;An effort to write a game&quot; title=&quot;An effort to write a game&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Scene loaded from OBJ and skybox&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/pxg-engine-design/scene.png&quot; alt=&quot;Scene loaded from OBJ and skybox&quot; title=&quot;Scene loaded from OBJ and skybox&quot; /&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Brainfuck programming</title>
