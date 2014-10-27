@@ -4,7 +4,7 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2014-10-21T21:00:58+03:00</updated>
+ <updated>2014-10-27T18:55:53+02:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
@@ -19,7 +19,7 @@
    <id>/pxg-engine</id>
    <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
-&lt;p&gt;I have been writing my own game engine since February till August this year.
+&lt;p&gt;I have been writing my own game &lt;a href=&quot;https://github.com/RostakaGmfun/PixelGearEngine&quot;&gt;engine&lt;/a&gt; since February till August this year.
 The reason why I have given up writing it is self-evident if you look at it’s code.
 Most of all, the engine suffers from bad OO design. As the size of code has grown, it became really painful to add new features and fix bugs.
 The main reasons for why this hell happened are:&lt;/p&gt;

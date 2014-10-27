@@ -11,7 +11,7 @@ comments: true
 
 ## Introduction
 
-I have been writing my own game engine since February till August this year.
+I have been writing my own game [engine](https://github.com/RostakaGmfun/PixelGearEngine) since February till August this year.
 The reason why I have given up writing it is self-evident if you look at it's code.
 Most of all, the engine suffers from bad OO design. As the size of code has grown, it became really painful to add new features and fix bugs.
 The main reasons for why this hell happened are:
