@@ -4,13 +4,40 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2014-10-27T18:55:53+02:00</updated>
+ <updated>2014-10-27T20:03:21+02:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
    <email>rostawesomegd@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>OpenGL learning resources</title>
+   <link href="//opengl-learning-resources.html"/>
+   <updated>2014-10-28T00:00:00+02:00</updated>
+   <id>/opengl-learning-resources</id>
+   <content type="html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;While writing my OpenGL/SDL2 game &lt;a href=&quot;https://github.com/rostakagmfun/PixelGearEngine&quot;&gt;engine&lt;/a&gt;, I made a long way of learning OpenGL. In this short post I will list the best of OpenGL learning resources I’ve encountered so far.&lt;/p&gt;
+
+&lt;h2 id=&quot;openglhttpsopengl&quot;&gt;&lt;a href=&quot;https://open.gl/&quot;&gt;Open.GL&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This great tutorial series is highly recommended for OpenGL 3.0 newbies.&lt;/p&gt;
+
+&lt;h2 id=&quot;opengl-superbiblehttpwwwopenglsuperbiblecom--both-5supthsup-and-6supthsup-editions&quot;&gt;&lt;a href=&quot;http://www.openglsuperbible.com/&quot;&gt;OpenGL SuperBible&lt;/a&gt; ( both 5&lt;sup&gt;th&lt;/sup&gt; and 6&lt;sup&gt;th&lt;/sup&gt; editions)&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.openglsuperbible.com/wp-content/uploads/2013/07/superbible6_sm.png&quot; alt=&quot;OpenGL SuberBible&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This book has really good examples of different rendering techniques implemented with OpneGL 3.3 and OpenGL 4.3 graphics APIs.&lt;/p&gt;
+
+&lt;h2 id=&quot;opengl-40-shading-language-cookbookhttpwwwamazoncomopengl-4-0-shading-language-cookbookdp1849514763&quot;&gt;&lt;a href=&quot;http://www.amazon.com/OpenGL-4-0-Shading-Language-Cookbook/dp/1849514763&quot;&gt;OpenGL 4.0 Shading Language Cookbook&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;http://ecx.images-amazon.com/images/I/51HdayMiz7L.jpg&quot; alt=&quot;OpenGL 4.0 Shading Language Cookbook&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Among numerous recipes, this book provides brilliant examples of lighting shaders and gives basic idea of shadows and particle systems.&lt;/p&gt;
+
+&lt;h2 id=&quot;ogldevhttpogldevatspacecouk&quot;&gt;&lt;a href=&quot;http://ogldev.atspace.co.uk/&quot;&gt;OGLDev&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;This collection of tutorials takes you step by step from creating a window and rendering a triangle to advanced rendering techniques.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>My own game engine or why I have given up writing it</title>
