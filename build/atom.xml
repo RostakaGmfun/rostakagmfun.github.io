@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Awesome Programmer</title>
+ <link href="/atom.xml" rel="self"/>
+ <link href="/"/>
+ <updated>2015-01-21T17:14:06+02:00</updated>
+ <id></id>
+ <author>
+   <name>Rostyslav Kurylo</name>
+   <email>rostawesomegd@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>OpenGL learning resources</title>
+   <link href="/opengl-learning-resources.html"/>
+   <updated>2014-10-28T00:00:00+02:00</updated>
+   <id>./opengl-learning-resources</id>
+   <content type="html">&lt;h1 id='introduction'&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;During development of my OpenGL/SDL2 game &lt;a href='https://github.com/rostakagmfun/PixelGearEngine'&gt;engine&lt;/a&gt;, I made a long way of learning OpenGL. In this short post I will list the best of OpenGL learning resources I&amp;#8217;ve encountered so far.&lt;/p&gt;
+
+&lt;h2 id='opengl'&gt;&lt;a href='https://open.gl/'&gt;Open.GL&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;This great tutorial series is highly recommended for OpenGL 3.0 newbies.&lt;/p&gt;
+
+&lt;h2 id='opengl_superbible__both_5_and_6_editions'&gt;&lt;a href='http://www.openglsuperbible.com/'&gt;OpenGL SuperBible&lt;/a&gt; ( both 5&lt;sup&gt;th&lt;/sup&gt; and 6&lt;sup&gt;th&lt;/sup&gt; editions)&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt='OpenGL SuberBible' src='http://www.openglsuperbible.com/wp-content/uploads/2013/07/superbible6_sm.png' /&gt;&lt;/p&gt;
+
+&lt;p&gt;This book has really good examples of different rendering techniques implemented with OpenGL 3.3 and OpenGL 4.3 graphics APIs.&lt;/p&gt;
+
+&lt;h2 id='opengl_40_shading_language_cookbook'&gt;&lt;a href='http://www.amazon.com/OpenGL-4-0-Shading-Language-Cookbook/dp/1849514763'&gt;OpenGL 4.0 Shading Language Cookbook&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt='OpenGL 4.0 Shading Language Cookbook' src='http://ecx.images-amazon.com/images/I/51HdayMiz7L.jpg' /&gt;&lt;/p&gt;
+
+&lt;p&gt;Among numerous recipes, this book provides brilliant examples of lighting shaders and gives basic idea of shadows and particle systems.&lt;/p&gt;
+
+&lt;h2 id='ogldev'&gt;&lt;a href='http://ogldev.atspace.co.uk/'&gt;OGLDev&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;This collection of tutorials takes you step by step from creating a window and rendering a triangle to advanced rendering techniques such as shadows, deffered shading and tesselation.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>My own game engine or why I have given up writing it</title>
+   <link href="/pxg-engine-design.html"/>
+   <updated>2014-10-21T00:00:00+03:00</updated>
+   <id>./pxg-engine</id>
+   <content type="html">&lt;h2 id='introduction'&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;I have been writing my own game &lt;a href='https://github.com/RostakaGmfun/PixelGearEngine'&gt;engine&lt;/a&gt; since February till August this year. The reason why I have given up writing it is self-evident if you look at it&amp;#8217;s code. Most of all, the engine suffers from bad OO design. As the size of code has grown, it became really painful to add new features and fix bugs. The main reasons for why this hell happened are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I haven&amp;#8217;t known much about OO patterns&lt;/li&gt;
+
+&lt;li&gt;I was writing 3D engine for the first time, that is why I have concentrated on features rather than on clear code design&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Things changed rapidly when I have started reading &lt;a href='http://www.headfirstlabs.com/books/hfdp/'&gt;Head First: Design Patterns&lt;/a&gt;. I understood the mistakes I have made while writing my engine and in this article I&amp;#8217;m going to highlight some of the biggest mistakes in PixelGear Engine.&lt;/p&gt;
+
+&lt;h2 id='the_main_class'&gt;The main class&lt;/h2&gt;
+
+&lt;p&gt;Though I was targeting to eventually develop cross platform engine, it&amp;#8217;s code design really wasn&amp;#8217;t ready for this. First of all, the whole window and context management boilerplate were encapsulated in single &lt;code&gt;pxgEngine&lt;/code&gt; class. Getting user input, creating window and context, counting frames per second made the &lt;code&gt;pxgEngine&lt;/code&gt; class a real mess. Furthermore, the HUD system was also somewhat dependent on &lt;code&gt;pxgEngine&lt;/code&gt; class, since you should call &lt;code&gt;pxgEngine::setHUDManager()&lt;/code&gt; to enable HUD rendering.&lt;/p&gt;
+&lt;script src='http://gist-it.appspot.com/https://github.com/RostakaGmfun/PixelGearEngine/blob/master/include/PXG.h?slice=30:74' /&gt;
+&lt;h2 id='node_system'&gt;Node system&lt;/h2&gt;
+
+&lt;p&gt;By initial concept both 3D objects and scenes in my engine should inherit an abstract &lt;code&gt;pxgNode&lt;/code&gt; class. This class should provide parent-child relations management, spatial transformations and object name handling. In addition, &lt;code&gt;pxgNode&lt;/code&gt; class included pure virtual functions for updating, rendering, and destroying nodes. However, this system was implemented badly at the beginning and was totally broken as the number of objects has grown. One of the numerous problems of &lt;code&gt;pxgNode&lt;/code&gt; was &lt;code&gt;UpdateTransformation()&lt;/code&gt; function. It updates the world matrix from scale, translation and rotation vectors and is meant to be called in &lt;code&gt;Update()&lt;/code&gt; pure virtual function. Now I can say, that such system should have been implemented with &lt;a href='http://en.wikipedia.org/wiki/Template_method_pattern'&gt;Template Method Pattern&lt;/a&gt;.&lt;/p&gt;
+&lt;script src='http://gist-it.appspot.com/https://github.com/RostakaGmfun/PixelGearEngine/blob/master/include/pxgNode.h?slice=14:44' /&gt;
+&lt;h2 id='world'&gt;World&lt;/h2&gt;
+
+&lt;p&gt;At the beginning the world system was meant to be a special scene, but later it turned into rather big class with many methods and HAS-A relationships with other engine classes. The inheritance of &lt;code&gt;pxgWorld&lt;/code&gt; from &lt;code&gt;pxgNode&lt;/code&gt; was not required at all. &lt;code&gt;pxgWorld&lt;/code&gt; managed physics, background, post-processing and object picking systems completely or partially on its own. In fact, this class needed complete redesign most of all among other engine classes.&lt;/p&gt;
+&lt;script src='http://gist-it.appspot.com/https://github.com/RostakaGmfun/PixelGearEngine/blob/master/include/pxgWorld.h?slice=26:62' /&gt;
+&lt;h2 id='pxgobject_and_friends'&gt;pxgObject and friends&lt;/h2&gt;
+
+&lt;p&gt;This class was used to render both 3D models an 3D sprites; it also used its own system for child mesh management (despite inheriting from &lt;code&gt;pxgNode&lt;/code&gt;. In fact, &lt;code&gt;pxgNode&lt;/code&gt;s parent-child system was not used by any class in the engine). Although &lt;code&gt;pxgObject&lt;/code&gt; used high-level engine classes for shader, buffer and texture management, the &lt;code&gt;pxgObject.cpp&lt;/code&gt; contains direct OpenGL calls (to manage vertex array and actually render the object). You should not be a professional programmer to note that &lt;code&gt;pxgObject&lt;/code&gt; system was completely wrong. &lt;script src='http://gist-it.appspot.com/https://github.com/RostakaGmfun/PixelGearEngine/blob/master/src/pxgObject.cpp?slice=254:344' style='overflow:auto' /&gt; As there were no higher-level abstractions for vertex arrays and draw calls, the same code should be written again and again every time you implement new renderable object (e.g. terrain, HUD object, particle system and so on).&lt;/p&gt;
+
+&lt;h2 id='os_abstractions_and_math_library'&gt;OS abstractions and math library&lt;/h2&gt;
+
+&lt;p&gt;In short, there are no OS abstractions in PixelGear. I thought I don&amp;#8217;t need them. In fact, I didn&amp;#8217;t need them while deploying the engine only on my development system (Linux). As for the math library, which is really important part of 3D rendering system, I have used really robust &lt;a href='http://glm.g-truc.net/'&gt;GLM&lt;/a&gt; - OpenGL Math Library, which mimics GLSL syntax and is really fast. However, in my engine only the small part of this great library was used. As &lt;code&gt;GLM&lt;/code&gt; used C++ templates intensively, it slowed down compilation of the engine. That is why it is good idea to write your own math library to fit particular purposes. The same with standard C++ library - it slows things down both at compile time and runtime - that is why it is good to write your own containers and string classes.&lt;/p&gt;
+
+&lt;h2 id='engine_features'&gt;Engine Features&lt;/h2&gt;
+
+&lt;p&gt;Event though PixelGear engine suffered from bad OO design, it has some features. Here is full feature list of my engine&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Loading meshes with materials from Wavefront OBJ format ( tested with Blender exporter )&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Loading textures from various image formats ( powered by SOIL )&lt;/li&gt;
+
+&lt;li&gt;Compiling vertex, geometry and fragment shaders&lt;/li&gt;
+
+&lt;li&gt;Shader system, which supports basic stuff for developing your own shaders ( uniforms, attributes and textures )&lt;/li&gt;
+
+&lt;li&gt;Shader library which provides basic shaders&lt;/li&gt;
+
+&lt;li&gt;Simple lighting system&lt;/li&gt;
+
+&lt;li&gt;Cube and plane meshes&lt;/li&gt;
+
+&lt;li&gt;Skyboxes&lt;/li&gt;
+
+&lt;li&gt;Keyboard and mouse input&lt;/li&gt;
+
+&lt;li&gt;Simple ( yet buggy ) terrain system&lt;/li&gt;
+
+&lt;li&gt;Post processing ( WIP )&lt;/li&gt;
+
+&lt;li&gt;Object picking&lt;/li&gt;
+
+&lt;li&gt;Blender exporter plugin in custom format ( WIP )&lt;/li&gt;
+
+&lt;li&gt;2D textures and text rendering&lt;/li&gt;
+
+&lt;li&gt;Rigid body dynamics ( powered by Bullet )&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;At last, here are some screenshots and videos:&lt;/p&gt;
+
+&lt;h3 id='terrain_demo'&gt;Terrain demo&lt;/h3&gt;
+&lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
+&amp;lt;iframe width=&amp;quot;570&amp;quot; height=&amp;quot;340&amp;quot; src=&amp;quot;//www.youtube.com/embed/FogCR0x93Zg?list=UU1VEk32Dv8l49nlaIclDyAw&amp;quot; frameborder=&amp;quot;0&amp;quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&lt;/pre&gt;
+&lt;h3 id='physics_demo'&gt;Physics demo&lt;/h3&gt;
+&lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
+&amp;lt;iframe width=&amp;quot;570&amp;quot; height=&amp;quot;340&amp;quot; src=&amp;quot;//www.youtube.com/embed/xiy6hlL0nYE?list=UU1VEk32Dv8l49nlaIclDyAw&amp;quot; frameborder=&amp;quot;0&amp;quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&lt;/pre&gt;
+&lt;h3 id='screenshots'&gt;Screenshots&lt;/h3&gt;
+
+&lt;p&gt;An effort to write a game&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt='An effort to write a game' src='/public/pxg-engine-design/gamedev-effort.png' /&gt;&lt;/p&gt;
+
+&lt;p&gt;Scene loaded from OBJ and skybox&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt='Scene loaded from OBJ and skybox' src='/public/pxg-engine-design/scene.png' /&gt;&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Brainfuck programming</title>
+   <link href="/brainfuck-programming.html"/>
+   <updated>2014-09-28T00:00:00+03:00</updated>
+   <id>./brainfuck-programming</id>
+   <content type="html">&lt;h2 id='introduction'&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;Brainfuck&lt;/code&gt; is esoteric programming language which was developed in 1993 by Urban Muller. It consists of only 8 operators and is not suited for writing practical applications - its purpose is to challenge programmers.&lt;/p&gt;
+
+&lt;h2 id='interpreter'&gt;Interpreter&lt;/h2&gt;
+
+&lt;p&gt;Writing &lt;code&gt;Brainfuck&lt;/code&gt; interpreter is quite a trivial task, so I have written my own. However, there are a lot of others, so you can pick up any of them.&lt;/p&gt;
+
+&lt;h2 id='syntax'&gt;Syntax&lt;/h2&gt;
+
+&lt;p&gt;As it was noted above, the syntax of &lt;code&gt;Brainfuck&lt;/code&gt; (&lt;code&gt;BF&lt;/code&gt; for short) consists of 8 operators. Before naming them let’s look on how &lt;code&gt;BF&lt;/code&gt; actually works. Operators&lt;/p&gt;
+
+&lt;p&gt;The program consists of sequence of 8 possible operators and are executed one by one in the order they are fed to the interpreter. The memory itself consists of (by official design) &lt;code&gt;30k&lt;/code&gt; cells of one-byte size. However, different variations exist (like word or double-word cell size and variable number of cells). At the start all cells are initialized to &lt;code&gt;0&lt;/code&gt; and the current cell pointer points to the first cell. In &lt;code&gt;C&lt;/code&gt; language this can be designated as: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='c'&gt;char *memory = (char*)malloc(NUM_CELLS);
+    memset(memory,0,NUM_CELLS);&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Two operators are used to increase and decrease cell pointer: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;&amp;gt; means memory++ and
+&amp;lt; means memory--&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Another two operators increment or decrement value at the current cell: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;+  means  *memory++  and
+-  means  *memory--&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Next pair of operators are used for I/O: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;. means printf(&amp;quot;%c&amp;quot;,memory); and
+, means scanf(&amp;quot;%c&amp;quot;,memory);&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;The last pair of operators is the most interesting as they are used for branching: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;[ is used for opening loop block and
+]  for closing it&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;The code inside square brackets will be executed until value of current cell won’t be zero: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='c'&gt;while(*memory)
+        /* execute code */&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;h2 id='comments'&gt;Comments&lt;/h2&gt;
+
+&lt;p&gt;Any other characters are ignored by Brainfuck interpreter. That means, that you can write any text in your Brainfuck program unless it does not contain 8 characters used to mark operators.&lt;/p&gt;
+
+&lt;h2 id='simple_bf_programs'&gt;Simple BF programs&lt;/h2&gt;
+
+&lt;p&gt;When you are learning new programming language, you probably first write a classic “HelloWorld” program. However, displaying string in Brainfuck is not that easy thing as you might think. So we will start with such a code: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;+++++ [-]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;In this program we first increment current (actually first) cell to &lt;code&gt;5&lt;/code&gt; and then go in a loop which will decrement a value until it reaches &lt;code&gt;0&lt;/code&gt;. It isn’t hard to guess that the loop will iterate five times. Let’s look at more complex program which adds two numbers together: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;+++ &amp;gt; +++++ [-&amp;lt;+&amp;gt;]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;First it sets first cell to &lt;code&gt;3&lt;/code&gt;, than moves on to the next cell and sets it to &lt;code&gt;5&lt;/code&gt;: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;[3][5]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, program enters a loop which iterates until the second cell (with value &lt;code&gt;5&lt;/code&gt;) will be equal to &lt;code&gt;0&lt;/code&gt;. In each iteration the value of second cell is decremented and the value of first cell incremented. As the program terminates, the value of first cell will be equal to &lt;code&gt;8&lt;/code&gt; and the second cell will be equal to zero: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;[8][0]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Subtraction looks much like addition except one operator: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;** +++++ &amp;gt; ++ [ -&amp;lt;-&amp;gt; ]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Since multiplication is addition repeated &lt;code&gt;n&lt;/code&gt; times, multiplying two numbers in &lt;code&gt;Brainfuck&lt;/code&gt; is not that hard: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;**+++++  [&amp;gt;++&amp;lt;-]**&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;h2 id='helloworld_program'&gt;HelloWorld Program&lt;/h2&gt;
+
+&lt;p&gt;At last, we get to the famous &lt;code&gt;HelloWorld&lt;/code&gt; program. Outputting some text in Brainfuck is a real challenge since you should designate each character with appropriate &lt;code&gt;ASCII&lt;/code&gt; code: &lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
+&amp;lt;div&amp;gt;
+  &amp;lt;pre&amp;gt;&amp;lt;code class=&amp;apos;bash&amp;apos;&amp;gt;Program to print string &amp;amp;quot;Hello world!&amp;amp;quot;
+    ASCII codes
+    H 72 7*10 plus 2
+    e 101 10*10 plus 1
+    l 108 101 plus 7
+    o 111 108 plus 3
+    _space_ 32 4*8
+    W 87 8*10 plus 7
+    o 111
+    r 114 111 plus 3
+    l 108
+    d 100 10*10
+    ! 33 32 plus 1
+    newline 10&lt;/pre&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+++++ ++ [&amp;amp;gt; +++++ +++++ &amp;amp;lt;-] &amp;amp;gt;++. print H
+&amp;amp;gt; +++++ +++++ [&amp;amp;gt; +++++ +++++ &amp;amp;lt;-] &amp;amp;gt;+. print e
++++++ ++ .. print ll
++++ . print o
+&amp;amp;gt; ++++ [&amp;amp;gt; +++++ +++ &amp;amp;lt;-] &amp;amp;gt;. print space
+&amp;amp;gt; +++++ +++ [&amp;amp;gt; +++++ +++++ &amp;amp;lt;-] &amp;amp;gt; +++++ ++ . print W
+&amp;amp;lt;&amp;amp;lt;&amp;amp;lt;&amp;amp;lt; . print o
++++ . print r
+----- - . print l
+----- --- . print d
+&amp;amp;gt;&amp;amp;gt;+. print !&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
+&amp;lt;/div&amp;gt;&lt;/pre&gt;
+&lt;h2 id='conclusion'&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Brainfuck is really interesting programming language which makes you think out of the box, especially while solving complex tasks and optimizing your programs.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>WxWidgets Tutorial</title>
+   <link href="/wxwidgets-tutorial.html"/>
+   <updated>2014-02-17T00:00:00+02:00</updated>
+   <id>./wxWidgetsTutorial</id>
+   <content type="html">&lt;h2 id='introduction'&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;wxWidgets&lt;/em&gt; is a cross-platform C++ GUI toolkit which provides an easy and fast way to implement GUI of any complexity. In this tutorial we will compile &lt;em&gt;wxWidgets&lt;/em&gt; under Linux and write simple GUI application.&lt;/p&gt;
+
+&lt;h2 id='compiling_wxwidgets'&gt;Compiling wxWidgets&lt;/h2&gt;
+
+&lt;p&gt;First, make sure you have GTK development files: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;$sudo apt-get install libgtk2.0-dev&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, download wxGTK source and extract the files somewere. After you have extracted the files:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;$cd path/to/wxGTK
+$mkdir build-gtk
+$cd build-gtk&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;We have created the build directory from where we will build wxWidgets binaries. Next, type this to configure:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;$../configure&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;And then: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;$make&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;After the compilation you can install wxWidgets with:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;$make install&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Writing a simple demo&lt;/p&gt;
+
+&lt;p&gt;Our next step is to write simple demo to demonstrate the power of wxWidgets library. We wll create a window with toolbar, menu and a few tabs with different things inside. I will guide you step by step and eventually you can grab the source code for this tutorial from it&lt;code&gt;s Github [repository](https://github.com/RostakaGmfun/wxWidgetsTutorial).&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id='creating_an_application_and_window'&gt;Creating an application and window&lt;/h2&gt;
+
+&lt;p&gt;Every wxWidgets application is represented as a class derived from &lt;code&gt;wxApp&lt;/code&gt;. So we will declare our &lt;code&gt;App&lt;/code&gt; class derived from &lt;code&gt;wxApp&lt;/code&gt; in &lt;code&gt;app.h&lt;/code&gt; file:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;#include &amp;lt;wx/app.h&amp;gt;
+
+    class App : public wxApp
+    {
+        public:
+            virtual bool OnInit();
+    };&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as IMPLEMENT_APP macro which we place in our app.cpp file: &lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
+&amp;lt;div&amp;gt;
+  &amp;lt;pre&amp;gt;&amp;lt;code class=&amp;apos;cpp&amp;apos;&amp;gt;#include &amp;amp;quot;app.h&amp;amp;quot;&lt;/pre&gt;&lt;/p&gt;
+
+&lt;p&gt;IMPLEMENT_APP(App);&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt; &amp;lt;/div&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Our App::OnInit() is empty for now: &lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
+&amp;lt;div&amp;gt;
+  &amp;lt;pre&amp;gt;&amp;lt;code class=&amp;apos;cpp&amp;apos;&amp;gt;bool App::OnInit()
+{&lt;/pre&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;return true;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt; &amp;lt;/div&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Now it is time to create the window. Our window class is called Frame and is derived from wxFrame. I placed Frame declaration and definition in main.h and main.cpp respectively. I called those two files as main because the main code is here.&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;#include &amp;lt;wx/wx.h&amp;gt;
+
+class Frame: public wxFrame //our Frame class derives from wxFrame base class
+{
+    public:
+        Frame(wxFrame *frame, const wxString&amp;amp; title);
+        ~Frame();&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;We have an constructor which takes as parameters a pointer to the parent window(if any) and a title string. Next look at the constructor definition:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;Frame::Frame(wxFrame *frame, const wxString&amp;amp; title) //in our constructor we call wxFrame constructor to create a window
+    : wxFrame(frame, -1, title, wxPoint(100,100),wxDefaultSize,wxMINIMIZE_BOX | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX)
+{
+    SetSize(1024,768); //set the size
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;In our constructor we call &lt;code&gt;wxFrame&lt;/code&gt; constructor to actually create the window at screen coordinates &lt;code&gt;(100;100).
+We also call &lt;/code&gt;wxFrame&lt;code&gt; member function &lt;/code&gt;SetSize()&lt;code&gt; to set the window size
+(you also can specify window size in constructor by writing &lt;/code&gt;wxPoint(1024,768)&lt;code&gt; instead of &lt;/code&gt;wxDefaultSize&lt;code&gt;).
+To show our window we should include &lt;/code&gt;main.h&lt;code&gt; file in &lt;/code&gt;app.cpp&lt;code&gt; and modify our &lt;/code&gt;App::OnInit()&lt;code&gt; function:&lt;/code&gt;&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;bool App::OnInit()
+{
+    Frame* frame = new Frame(0L, &amp;quot;Awesome Programmer wxWidgets Tutorial&amp;quot;);
+
+    frame-&amp;gt;Show();
+
+    return true;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;We call wxFrame::Show() to show our window.&lt;/p&gt;
+
+&lt;h2 id='adding_menu_and_toolbar'&gt;Adding menu and toolbar&lt;/h2&gt;
+
+&lt;p&gt;It is time to add menu to our window. In &lt;code&gt;main.h&lt;/code&gt;:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;class Frame: public wxFrame
+{
+    private:
+        wxMenuBar* menuBar;
+ wxMenu* menuFile;
+ wxMenu* menuAbout;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;And in &lt;code&gt;main.cpp&lt;/code&gt;:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;Frame::Frame(wxFrame *frame, const wxString&amp;amp; title)
+    : wxFrame(frame, -1, title, wxPoint(100,100),wxDefaultSize,wxMINIMIZE_BOX | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX)
+{
+       SetSize(1024,768); //set the size
+       menuBar = new wxMenuBar;
+       menuFile = new wxMenu;
+       menuAbout = new wxMenu;
+       menuPaint = new wxMenu;
+
+       //append menu entries for our 'File' and 'About' menus
+       //we use the same event IDs as in EVT_MENU macro (see above)
+       menuFile-&amp;gt;Append(NEW,&amp;quot;&amp;amp;New&amp;quot;);
+       menuFile-&amp;gt;Append(OPEN,&amp;quot;&amp;amp;Open&amp;quot;);
+       menuFile-&amp;gt;Append(SAVE,&amp;quot;&amp;amp;Save&amp;quot;);
+       menuFile-&amp;gt;Append(QUIT,&amp;quot;&amp;amp;Quit&amp;quot;);
+
+      menuAbout-&amp;gt;Append(ABOUT,&amp;quot;&amp;amp;About&amp;quot;);
+
+ //append menus to the menubar
+ menuBar-&amp;gt;Append(menuFile,&amp;quot;&amp;amp;File&amp;quot;);
+ menuBar-&amp;gt;Append(menuAbout,&amp;quot;&amp;amp;Help&amp;quot;);
+
+ //show our menu bar
+ SetMenuBar(menuBar);
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;A little explanation is needed here. First, we create our objects. The we use &lt;code&gt;wxMenu::Append()&lt;/code&gt; function to add menu entry. &lt;code&gt;wxMenu::Append()&lt;/code&gt; function takes as parameter an &lt;code&gt;ID&lt;/code&gt; of event to be handled when the users selects that entry(see below) and a text to display. Finally we append our menus to the menu bar with &lt;code&gt;wxMenuBar::Append()&lt;/code&gt; function and set up the menu bar for our window with &lt;code&gt;SetMenuBar() function.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And now let&amp;#8217;s add some response to our menu. First of all, place a call to &lt;code&gt;DECLARE_EVENT_TABLE()&lt;/code&gt; macro in our &lt;code&gt;Frame&lt;/code&gt; class definition. We will define so-called event table later. We will specify the event handler - the callback function which will be called on particular event. First, we will create an event handler for &lt;code&gt;About&lt;/code&gt; menu. So place the following private function declaration in our &lt;code&gt;Frame&lt;/code&gt; class:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void OnAbout(wxCommandEvent&amp;amp; event);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next, add function&amp;#8217;s definition in &lt;code&gt;main.cpp&lt;/code&gt;:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;void Frame::OnAbout(wxCommandEvent &amp;amp;event)
+{
+    wxMessageBox(&amp;quot;This is simple wxWidgets tutorial from awesomeproger.blogspot.com&amp;quot;, &amp;quot;Awesome Programmer tutorial&amp;quot;);
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Every event handler in wxWidgets must have it&amp;#8217;s own &lt;code&gt;ID&lt;/code&gt;. It is possible to use predefined &lt;code&gt;ID&lt;/code&gt;s, but we will declare our own as enumeration:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;enum ev_ids
+{
+    QUIT,
+    ABOUT,
+    OPEN,
+    SAVE,
+    NEW,
+};&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;We will add more IDs later to have more functionality. To actually specify this function as event handler we need to add the following code somewhere in &lt;code&gt;main.cpp&lt;/code&gt;:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;BEGIN_EVENT_TABLE(Frame, wxFrame) //we begin declaring event table by specifying the class we want to declare event table for and it's base class
+    //we use EVT_MENU macro for menu entries. Here we pas a custom defined event id which we will use later to create appropriate controls
+    EVT_MENU(ABOUT, Frame::OnAbout)
+END_EVENT_TABLE()&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;EVT_MENU&lt;/code&gt; macro specifies a menu event. It takes as parameters and event &lt;code&gt;ID&lt;/code&gt; and an event handler function.&lt;/p&gt;
+
+&lt;p&gt;Next, try adding a &lt;code&gt;QUIT&lt;/code&gt; event, use &lt;code&gt;Close()&lt;/code&gt; function to close the window.&lt;/p&gt;
+
+&lt;p&gt;Now it is time to create a toolbar which will duplicate the functionality of menu bar. Add a private pointer to &lt;code&gt;wxToolBar&lt;/code&gt; in our &lt;code&gt;Frame&lt;/code&gt; class and use the following code to create toolbar:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;toolBar = CreateToolBar();
+
+    //we use wxArtProvider class (from wx/artprov.h) to get the default icons into our bitmaps
+    wxBitmap open = wxArtProvider::GetBitmap(wxART_FILE_OPEN,wxART_TOOLBAR);
+    wxBitmap exit = wxArtProvider::GetBitmap(wxART_QUIT,wxART_TOOLBAR);
+    wxBitmap save = wxArtProvider::GetBitmap(wxART_FILE_SAVE, wxART_TOOLBAR);
+    wxBitmap b_new = wxArtProvider::GetBitmap(wxART_NEW,wxART_TOOLBAR);
+
+    toolBar-&amp;gt;AddTool(NEW, b_new, &amp;quot;New file&amp;quot;);
+    toolBar-&amp;gt;AddTool(OPEN, open, &amp;quot;Open file&amp;quot;);
+    toolBar-&amp;gt;AddTool(SAVE, save, &amp;quot;Save file&amp;quot;);
+    toolBar-&amp;gt;AddTool(QUIT, exit, &amp;quot;Exit&amp;quot;);
+
+    //show our toolbar. It needs to be called every time the toolbar has been modified
+    toolBar-&amp;gt;Realize();&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;We used function &lt;code&gt;CreateToolBar()&lt;/code&gt; to create toolbar and &lt;code&gt;wxToolBar::AddTool()&lt;/code&gt; to add buttons to it. The &lt;code&gt;AddTool()&lt;/code&gt; functions takes as parameters corresponding event &lt;code&gt;ID&lt;/code&gt;, bitmap image for the button(see below) and a text to display when the mouse hovers on button. To create bitmaps for our images we used &lt;code&gt;wxArtProviderClass&lt;/code&gt; instead of manually loading custom images from disk. The &lt;code&gt;wxArtProvider::GetBitmap()&lt;/code&gt; returns the &lt;code&gt;wxBitmap&lt;/code&gt; for us. There is a number of predefined values for first parameter of the function and the second parameter tells that we want toolbar bitmap. The complete list of bitmap IDs can be found in &lt;code&gt;wxWidgets&lt;/code&gt; &lt;a href='http://docs.wxwidgets.org/trunk/classwx_art_provider.html'&gt;documentation&lt;/a&gt;. Finally, the &lt;code&gt;wxToolBar::Realize()&lt;/code&gt; functions shows our toolbar to the user.&lt;/p&gt;
+
+&lt;h2 id='creating_multiple_tabs'&gt;Creating multiple tabs&lt;/h2&gt;
+
+&lt;p&gt;It is time to create tabs and add interesting things to them. First, we will make a tab with &lt;code&gt;wxTreeCtrl&lt;/code&gt; demo. &lt;code&gt;wxTreeCtrl&lt;/code&gt; control allows to add tree view and represent hierarchical information. Add a private pointers to &lt;code&gt;wxNotebook&lt;/code&gt; and &lt;code&gt;wxTreeCtrl&lt;/code&gt; in our &lt;code&gt;Frame&lt;/code&gt; class and use the following code in our &lt;code&gt;Frame&lt;/code&gt; constructor:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;notebook = new wxNotebook(this,wxID_ANY);
+
+ tree = new wxTreeCtrl(notebook,wxID_ANY);
+ notebook-&amp;gt;AddPage(tree,&amp;quot;Tree example&amp;quot;);
+ tree-&amp;gt;SetBackgroundColour(wxColour(240,240,240));&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Here we create the &lt;code&gt;wxNotebook&lt;/code&gt; object as a child for our Frame and a &lt;code&gt;wxTreeCtrl&lt;/code&gt; object as a child of &lt;code&gt;wxNotebook&lt;/code&gt;. Next, we add a page containing our tree object to the notebook with the function &lt;code&gt;wxNotebook::AddPage()&lt;/code&gt;&lt;code&gt;.
+  We also set the background color to very light for tree object. You can use &lt;/code&gt;SetBackgroundColour()&lt;code&gt;method for any window type.
+Next I will demonstrate the usage of `wxTreeCtrl`:&lt;/code&gt;&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;tree-&amp;gt;SetWindowStyle(wxTR_HIDE_ROOT); //hides the real root node to have many roots
+    wxTreeItemId root = tree-&amp;gt;AddRoot(&amp;quot;invisible root&amp;quot;);//this root will be invisible
+    wxTreeItemId r1 = tree-&amp;gt;AppendItem(root, &amp;quot;Root1&amp;quot;);
+    wxTreeItemId r2 = tree-&amp;gt;AppendItem(root,&amp;quot;Root2&amp;quot;);
+    tree-&amp;gt;AppendItem(r1,&amp;quot;Node1&amp;quot;);
+    tree-&amp;gt;AppendItem(r1,&amp;quot;Node2&amp;quot;);
+    tree-&amp;gt;AppendItem(r2,&amp;quot;Node3&amp;quot;);&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;wxTR_HIDE_ROOT&lt;/code&gt; style flag hides the real root of tree. We need this in order to have many independent roots (which actually are nodes of hidden root). Every node in &lt;code&gt;wxTreeCtrl&lt;/code&gt; is of type &lt;code&gt;wxTreeItemId&lt;/code&gt;. We first add invisible root and the use the returned element &lt;code&gt;ID&lt;/code&gt; to append childs to it with a help of function &lt;code&gt;wxTreeCtrl::AppendItem()&lt;/code&gt;. Now we are going to implement the event for node selection. Add function prototype in our &lt;code&gt;Frame&lt;/code&gt; class:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void OnTreeItemSelected(wxTreeEvent&amp;amp; event);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The definition: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;void Frame::OnTreeItemSelected(wxTreeEvent&amp;amp; event)
+{
+    wxTreeItemId selectedItem = event.GetItem();
+    if(!tree-&amp;gt;ItemHasChildren(selectedItem)) //report only if node was selected
+        wxMessageBox(&amp;quot;Selected node name: &amp;quot;+tree-&amp;gt;GetItemText(selectedItem), &amp;quot;Node selected!&amp;quot;);
+    else
+        tree-&amp;gt;Expand(selectedItem); //othervise just expand the item
+    return;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;We use &lt;code&gt;wxTreeEvent&lt;/code&gt; object to get the selected item. Next we check whether this item has no child nodes(so it is node itself) and if so display the message box with the name of the selected node. If one of the roots was selected we expand it to show child nodes. To specify this function as the event handler for tree object, we use the &lt;code&gt;EVT_TREE_ITEM_ACTIVATED&lt;/code&gt; macro. We specify &lt;code&gt;wxID_ANY&lt;/code&gt; as &lt;code&gt;ID&lt;/code&gt; for our event because we have only one tree object.&lt;/p&gt;
+
+&lt;p&gt;Well, let&amp;#8217;s add another tab to our window. We will place a code editor there. For full featured text editor with code highlighting the &lt;code&gt;wxStyledTextCtrl&lt;/code&gt; is used. This is a wrapper around &lt;code&gt;Scintilla&lt;/code&gt; code editing component. Despite the real complexity of code editor, using &lt;code&gt;wxStyledTextCtrl&lt;/code&gt; is rather simple and the results are really nice. So include &lt;code&gt;wx/stc/stc.h&lt;/code&gt; header file in &lt;code&gt;main.h&lt;/code&gt; and add private to &lt;code&gt;wxStyledTextCtrl&lt;/code&gt; in &lt;code&gt;private&lt;/code&gt; section. Add the following code to &lt;code&gt;Frame&lt;/code&gt; constructor: &lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
+&amp;lt;div&amp;gt;
+  &amp;lt;pre&amp;gt;&amp;lt;code class=&amp;apos;cpp&amp;apos;&amp;gt;//create Scintilla text editor object
+    editor = new wxStyledTextCtrl(notebook,wxID_ANY,wxDefaultPosition,this-&amp;amp;gt;GetSize());
+    notebook-&amp;amp;gt;AddPage(editor,&amp;amp;quot;Editor&amp;amp;quot;);
+ //set our font for the whole text. We should specify this before defining styles for particular things (keywords, numbers, string, etc.)
+ wxFont font(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL);
+ editor-&amp;amp;gt;StyleSetFont(wxSTC_STYLE_DEFAULT,font);
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_STYLE_LINENUMBER, wxColour (75, 75, 75) );
+    editor-&amp;amp;gt;SetCaretLineVisible(true); //enable current line highlighting
+    editor-&amp;amp;gt;SetCaretLineBackground(wxColour(245,245,255)); //very light highliting color for active line
+    editor-&amp;amp;gt;StyleSetBackground (wxSTC_STYLE_LINENUMBER, wxColour (220, 220, 220));
+    editor-&amp;amp;gt;SetMarginWidth(0,55);
+    editor-&amp;amp;gt;SetMarginType (0, wxSTC_MARGIN_NUMBER);
+    editor-&amp;amp;gt;StyleClearAll();
+    editor-&amp;amp;gt;SetLexer(wxSTC_LEX_CPP);
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_C_STRING,wxColour(150,0,0));
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_C_PREPROCESSOR,wxColour(0,150,105));
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_C_IDENTIFIER,wxColour(0,0,0));
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_C_NUMBER,wxColour(0,150,0));
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_C_CHARACTER,wxColour(150,0,0));
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_C_WORD,wxColour(32,100,200));
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_C_COMMENT,wxColour(150,150,150));
+    editor-&amp;amp;gt;StyleSetForeground (wxSTC_C_COMMENTLINE,wxColour(150,150,150));
+    editor-&amp;amp;gt;StyleSetBold(wxSTC_C_WORD, true);&lt;/pre&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//list of c++ 11 keywords from http://en.cppreference.com/w/cpp/keyword&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;editor-&amp;#62;SetKeyWords(0, wxT( &amp;#34;alignas alignof and and_eq asm auto bitand bitor bool break case catch char char16_t char32_t class compl const constexpr &amp;#34; &amp;#34;const_cast continue decltype default delete do double dynamic_cast else&amp;#34; &amp;#34;enum explicit export extern false float for friend goto if inline int long mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public register reinterpret_cast&amp;#34; &amp;#34;return short signed sizeof static static_assert static_cast struct switch template this thread_local throw true try typedef typeid typename union unsigned using virtual void volatile wchar_t while xor xor_eq&amp;#34; ));&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt; &amp;lt;/div&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;First we create the editor object and add it as a page to our notebook. Next we specify a global font before setting particular styling for keywords, strings, numbers etc. After that we enable current line highlighting and set the highlight color. We also specify the left margin attributes for line numbers and then begin styling the C++ lexicon. First we choose the lexer as &lt;code&gt;wxSTC_LEX_CPP&lt;/code&gt;. There are a number of predefined lexers. To see the corresponding defines look into &lt;code&gt;wx/stc/stc.h&lt;/code&gt; file. After that we specify individual colors for strings(enclosed in double quotes), preprocessor, identifiers, numbers, characters (enclosed in a single quotes), keywords, line comments, and multiline comments. We also enable bold font for keywords. What goes next is a list of all C++ 11 keywords for keyword set 0 (that is our &lt;code&gt;wxSTC_C_WORD&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Now lets add an ability to open files. We will define &lt;code&gt;Frame::OnOpen()&lt;/code&gt; event handler. Try adding the event handler to the event table on your own. And here is the implementation of &lt;code&gt;Frame::OnOpen()&lt;/code&gt; function:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;void Frame::OnOpen(wxCommandEvent &amp;amp;event)
+{
+    wxString p = wxFileSelector(&amp;quot;Open file&amp;quot;, &amp;quot;&amp;quot;,
+    &amp;quot;&amp;quot;, &amp;quot;&amp;quot;);
+ if(p!=wxEmptyString)
+ {
+        ifstream file(p);
+        if(!file.is_open())
+        {
+            wxMessageBox(&amp;quot;Error opening file&amp;quot;,&amp;quot;Error&amp;quot;);
+            return;
+        }
+        fileName = p;
+        //read file contents
+        string val, full;
+        while(file.good())
+        {
+            getline(file,val);
+            full+=val+&amp;quot;\n&amp;quot;;
+        }
+        file.close();
+        editor-&amp;gt;SetText(full);
+        //convert all EOLs to one mode. If you do not understand the reason of this call, comment it out and try out.
+        //Some lines will not be detected by Scintilla
+        editor-&amp;gt;ConvertEOLs(wxSTC_EOL_LF);
+
+ }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;We use &lt;code&gt;wxFileSelector()&lt;/code&gt; function to display file selection dialog. The first parameter is dialog name and the other three are default path, default file name, default extension and wildcard, which we left empty for simplicity. If the returned file name string is not empty(the user selected file) we open and read it with &lt;code&gt;std::ifstream&lt;/code&gt; and set the text to display in editor with function &lt;code&gt;wxStyledTextCtrl::SetText()&lt;/code&gt;. Furthermore, we set the member &lt;code&gt;std::string&lt;/code&gt; variable &lt;code&gt;fileName&lt;/code&gt; to the file name of opened file. We will use this variable to implement file saving. So, here is &lt;code&gt;OnSave()&lt;/code&gt; event handler:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;void Frame::OnSave(wxCommandEvent&amp;amp; event)
+{
+        if(fileName.length()&amp;lt;=0)
+        {
+            wxString p = wxSaveFileSelector(&amp;quot;&amp;quot;, &amp;quot;All Files|*.*|C++ Source Files (*.cpp) |*.cpp| C/C++ Header Files (*.h) |*.h&amp;quot;, &amp;quot;new&amp;quot;);
+            if(p!=wxEmptyString)
+            {
+                fileName = p;
+            }
+        }
+        ofstream of(fileName.c_str());
+        of.write(editor-&amp;gt;GetText(),editor-&amp;gt;GetLength());
+        of.close();
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;wxSaveFileSelector()&lt;/code&gt; function shows a save file dialog to the user if the &lt;code&gt;fileName&lt;/code&gt; is not set. Here we use the wildcard to give the user option to chose file extension.&lt;/p&gt;
+
+&lt;p&gt;The last part of tutorial is &lt;code&gt;GDI&lt;/code&gt; (Graphics Device Interface) of &lt;code&gt;wxWidgets&lt;/code&gt; library. In this part we will create a simple paint program. So let&amp;#8217;s add one more tab to our notebook and a private member pointer to wxWindow in our &lt;code&gt;Frame&lt;/code&gt; class. To do drawing in &lt;code&gt;wxWidgets&lt;/code&gt;, we need a device context, which is encapsulated in &lt;code&gt;wxPaintDC&lt;/code&gt; class. The &lt;code&gt;wxPaintDC&lt;/code&gt; class has various methods to draw lines, points, rectangles, text , circles and bitmaps. When window is moved to another position, we need to redraw our graphics. That is why the &lt;code&gt;EVT_PAINT&lt;/code&gt; event exists. However, this event triggers only when the window needs to be redrawn but not when we need to redraw it. To have more frequent updates we can use the special &lt;code&gt;EVT_IDLE&lt;/code&gt; event macro. This event triggers all the time when the window becomes idle. This way we can capture input and draw quite frequently. Using the paint program we will write it is possible to draw arbitary lines and change background color. Every line consists of two points. To store points I declared such a structure:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;struct Point
+{
+    Point(int _x, int _y, wxColour c, int w) : x(_x), y(_y),color(c), width(w) {}
+    int x;
+    int y;
+    int width;
+    wxColour color;
+};&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The width member specifies the width of line to be drawn from this point and the color specifies the color of the line to be drawn. We also should add some members to our &lt;code&gt;Frame&lt;/code&gt; class: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;std::vector&amp;lt;Point&amp;gt; points;
+    wxColour pointColor, bgColor, prevBgColor;
+    int lineWidth;
+    bool wasReleased;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;The points is an array of points to be drawn. The &lt;code&gt;pointColo&lt;/code&gt;r and &lt;code&gt;bgColor&lt;/code&gt; are used to store the currently selected line color and background color. However, we do not need to redraw background color every time. We will do this only when the &lt;code&gt;bgColor&lt;/code&gt; is changed. That is why the &lt;code&gt;prevBgColor&lt;/code&gt; member is declared. If &lt;code&gt;bgColor != prevBgColor&lt;/code&gt;, we will draw a rectangle of color &lt;code&gt;bgColo&lt;/code&gt;r and set &lt;code&gt;prevBgColor&lt;/code&gt; to &lt;code&gt;bgColor&lt;/code&gt;. The &lt;code&gt;wasReleased&lt;/code&gt; indicates whether the user released left mouse button. If so, we have to insert special point with coordinates &lt;code&gt;(-1;-1)&lt;/code&gt;, which will not be skipped in our drawing function. Having these bits together, here is the drawing code:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;void Frame::Redraw(wxDC &amp;amp;dc)
+{
+    if(bgColor!=prevBgColor)
+    {
+        dc.SetBrush(wxBrush(bgColor));
+        dc.DrawRectangle(0,0,gdiExample-&amp;gt;GetSize().x,gdiExample-&amp;gt;GetSize().y);
+        prevBgColor = bgColor;
+    }
+    for(int i = 0;i&amp;lt;points.size();i++) //draw our points
+    {
+        dc.SetPen(wxPen(points[i].color,points[i].width,wxPENSTYLE_SOLID));
+        if((points[i].x==-1&amp;amp;&amp;amp;points[i].y==-1)||points[i&amp;gt;0?i-1:0].x==-1&amp;amp;&amp;amp;points[i&amp;gt;0?i-1:0].y==-1) //check if there are magic values which indicate the line break
+            continue;
+        dc.DrawLine(wxCoord(points[i&amp;gt;0?i-1:0].x),wxCoord(points[i&amp;gt;0?i-1:0].y),wxCoord(points[i].x),wxCoord(points[i].y));
+    }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;Redraw()&lt;/code&gt; function takes as parameter a &lt;code&gt;wxDC&lt;/code&gt; object which is the base class for &lt;code&gt;wxPaintDC&lt;/code&gt; and other device context objects. I will tell you the reason for this later. To draw a rectangle(background color) we need to specify a brush to use. The we set a pen object to draw lines. We loop through our points array and draw the lines between the current and previous point. If we encounter a special point with coordinates &lt;code&gt;(-1;-1)&lt;/code&gt;, we skip the current point to create a line break. At this point it is time to write code for capturing user input.The &lt;code&gt;GetInput()&lt;/code&gt; is an idle event handler which creates points if user is pressing left mouse button and calls &lt;code&gt;Redraw()&lt;/code&gt; function:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;void Frame::GetInput(wxIdleEvent&amp;amp; event)
+{
+    wxMouseState state = wxGetMouseState();
+    if(notebook-&amp;gt;GetSelection()==1)
+        if(state.LeftIsDown())
+            {
+                int cx,cy;
+                cx = gdiExample-&amp;gt;GetScreenPosition().x;
+                cy = gdiExample-&amp;gt;GetScreenPosition().y;
+                points.push_back(Point(state.GetX()-cx,state.GetY()-cy,pointColor, lineWidth));
+                wasReleased = false;
+            }
+            else
+            {
+                if(!wasReleased)
+                {
+                    points.push_back(Point(-1,-1,pointColor,lineWidth));
+                    wasReleased = true;
+                }
+            }
+    wxPaintDC dc(gdiExample);
+    Redraw(dc);
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;We retrieve current &lt;code&gt;wxMouseState&lt;/code&gt; object with &lt;code&gt;wxGetMouseState()&lt;/code&gt; function. Then we can check whether left mouse button is pressed with &lt;code&gt;wxMouseState::LeftIsDown()&lt;/code&gt; method. We than add a point at coordinates of mouse pointer. However, &lt;code&gt;wxMouseState::GetX()&lt;/code&gt; and &lt;code&gt;wxMouseState::GetY()&lt;/code&gt; return the screen space pointer coordinates. We need to add the position of &lt;code&gt;gdiExample&lt;/code&gt; window to get the coordinates locally to the top left corner of window in which we draw. If mouse button is not pressed and the special point &lt;code&gt;(-1;-1)&lt;/code&gt; has not been inserted yet(which is indicated by &lt;code&gt;wasReleased&lt;/code&gt; variable) we insert it. Finally, we create &lt;code&gt;wxPaintDC&lt;/code&gt; object for our gdiExample window and pass it to the &lt;code&gt;Redraw()&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;p&gt;The last piece of our mosaic is to implement image saving. I showed the definition of &lt;code&gt;OnSave()&lt;/code&gt; event handler earlier when we were dealing with text editor. And here is now its modified version. If the pain tab is selected, we save the image, otherwise we save a text file:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;void Frame::OnSave(wxCommandEvent&amp;amp; event)
+{
+    if(notebook-&amp;gt;GetSelection()==1) //our simple paint program
+    {
+        wxMemoryDC memDC; //create memore dc into which we will draw our image
+        wxBitmap image(gdiExample-&amp;gt;GetSize().x,gdiExample-&amp;gt;GetSize().y); //create bitmap on which the image will be drawn
+        memDC.SelectObject(image); //set the bitmap to be drawn
+        memDC.Clear();
+        //redraw with updating background color
+        memDC.SetBrush(wxBrush(bgColor));
+        memDC.DrawRectangle(0,0,gdiExample-&amp;gt;GetSize().x,gdiExample-&amp;gt;GetSize().y);
+        Redraw(memDC); //actually draw our image to memory
+        memDC.SelectObject(wxNullBitmap); //free the bitmap
+        wxString p = wxSaveFileSelector(&amp;quot;&amp;quot;, &amp;quot;PNG Image|*.png|BMP Image|*.bmp|JPEG Image|*.jpg&amp;quot;, &amp;quot;image&amp;quot;);
+        if(p!=wxEmptyString)
+
+        {
+            wxString path,name,extension;
+            wxSplitPath(p,&amp;amp;path,&amp;amp;name,&amp;amp;extension);
+            if(extension==&amp;quot;jpg&amp;quot;)
+                image.SaveFile(p,wxBITMAP_TYPE_JPEG,NULL);
+            if(extension==&amp;quot;png&amp;quot;)
+                image.SaveFile(p,wxBITMAP_TYPE_PNG,NULL);
+            if(extension==&amp;quot;bmp&amp;quot;)
+                image.SaveFile(p, wxBITMAP_TYPE_BMP,NULL);
+        }
+
+
+    }
+    if(notebook-&amp;gt;GetSelection()==2) //we are in editor tab
+    {
+        if(fileName.length()&amp;lt;=0)
+        {
+            wxString p = wxSaveFileSelector(&amp;quot;&amp;quot;, &amp;quot;All Files|*.*|C++ Source Files (*.cpp) |*.cpp| C/C++ Header Files (*.h) |*.h&amp;quot;, &amp;quot;new&amp;quot;);
+            if(p!=wxEmptyString)
+            {
+                fileName = p;
+            }
+        }
+        ofstream of(fileName.c_str());
+        of.write(editor-&amp;gt;GetText(),editor-&amp;gt;GetLength());
+        of.close();
+    }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;wxNotebook::GetSelection()&lt;/code&gt; returns the index of currently selected tab. In this piece of code it is assumed that the paint tab is the second and the editor tab it the third tab from the left. We than create special &lt;code&gt;wxMemoryDC&lt;/code&gt; object which features drawing into a &lt;code&gt;wxBitmap&lt;/code&gt; object. We redraw the background and call our &lt;code&gt;Redraw()&lt;/code&gt; function to draw our points into &lt;code&gt;memDC&lt;/code&gt;. Eventually, we save the bitmap in &lt;code&gt;JPEG&lt;/code&gt;, &lt;code&gt;PNG&lt;/code&gt; or &lt;code&gt;BMP&lt;/code&gt; format.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt='Our paint program in action' src='/public/wxwidgets-tutorial/paint-shot.png' /&gt;&lt;/p&gt;
+
+&lt;h2 id='conclusion'&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;This is the finish. At this point you are able to create nice applications with a help of &lt;code&gt;wxWidgets&lt;/code&gt; library. However, there are a lot of things which I haven&amp;#8217;t covered in this tutorial. Just explore the documentation and Wiki to find out more. For example, &lt;code&gt;wxWidgets&lt;/code&gt; features rendering with &lt;code&gt;OpenGL&lt;/code&gt; to one of it&amp;#8217;s controls. Furthermore, you can render &lt;code&gt;HTML&lt;/code&gt; documents very simply with a help of &lt;code&gt;wxHTMLWindow&lt;/code&gt;. Experiment with those things and gain the experience. Good luck!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>XML file parsing in C++</title>
+   <link href="/xml-file-parsing-cpp.html"/>
+   <updated>2013-10-13T00:00:00+03:00</updated>
+   <id>./XMLParsing</id>
+   <content type="html">&lt;h2 id='introduction'&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;XML files are widely used today so it is great to know how to parse them.&lt;/p&gt;
+
+&lt;p&gt;One good XML file parsing library is &lt;em&gt;rapidxml&lt;/em&gt;. It is distributed as a collection of header files and can be downloaded from it&amp;#8217;s &lt;a href='http://rapidxml.sourceforge.net/'&gt;official site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='getting_started'&gt;Getting started&lt;/h2&gt;
+
+&lt;p&gt;So, lets start. First, we&amp;#8217;ll just read the contents of the simplest ever xml file:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='xml'&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&amp;lt;root&amp;gt;
+    &amp;lt;node1&amp;gt;
+        Contents of node 1
+    &amp;lt;/node1&amp;gt;
+&amp;lt;/root&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Open your favourite text editor or IDE and let&amp;#8217;s do some coding:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;#include &amp;lt;iostream&amp;gt;
+
+    #include &amp;quot;rapidxml/rapidxml.hpp&amp;quot;
+    #include &amp;quot;rapidxml/rapidxml_utils.hpp&amp;quot;
+
+    using namespace rapidxml;
+    using namespace std;
+
+    int main(void)
+    {
+        xml_document&amp;lt;&amp;gt; doc; //create xml_document object
+        file&amp;lt;&amp;gt; xmlFile(&amp;quot;sample.xml&amp;quot;); //open file
+        doc.parse&amp;lt;0&amp;gt;(xmlFile.data()); //parse the contents of file
+        xml_node&amp;lt;&amp;gt;* root = doc.first_node(&amp;quot;root&amp;quot;);//find our root node
+        xml_node&amp;lt;&amp;gt;* node1 = root-&amp;gt;first_node(&amp;quot;node1&amp;quot;); //find our node1 node
+
+        cout &amp;lt;&amp;lt; node1-&amp;gt;value() &amp;lt;&amp;lt; &amp;quot;\n&amp;quot;; //print node1 value
+
+        return 0;
+    }&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id='compiling'&gt;Compiling&lt;/h2&gt;
+
+&lt;p&gt;To compile your source under Debian or other Debian-like Linux distro first make sure &lt;strong&gt;g++&lt;/strong&gt; package is installed: &lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;$sudo apt-get install g++&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;After that you can compile your source:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;$g++ -o rapidxml_demo rapidxml_demo.cpp&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To run the executable type:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='bash'&gt;$./rapidxml_demo&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The output should be something like that:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Contents of node 1&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='writing_xml_file'&gt;Writing XML file&lt;/h2&gt;
+
+&lt;p&gt;Except parsing &lt;em&gt;rapidxml&lt;/em&gt; features writing in XML format. So, let&amp;#8217;s look on another example:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;#include &amp;lt;string&amp;gt;
+#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;fstream&amp;gt; //for file output
+#include &amp;lt;iterator&amp;gt;//for std::back_inserter
+
+#include &amp;quot;rapidxml/rapidxml.hpp&amp;quot;
+
+#include &amp;quot;rapidxml/rapidxml_print.hpp&amp;quot;
+
+
+using namespace std;
+
+
+int main(void)
+{
+ rapidxml::xml_document&amp;lt;&amp;gt; doc;
+ ofstream out(&amp;quot;sample2.xml&amp;quot;);
+
+ // xml declaration node
+ rapidxml::xml_node&amp;lt;&amp;gt;* decl = doc.allocate_node(rapidxml::node_declaration); //allocate default xml declaration node
+ //apppend special attributes to it
+ decl-&amp;gt;append_attribute(doc.allocate_attribute(&amp;quot;version&amp;quot;, &amp;quot;1.0&amp;quot;));
+ decl-&amp;gt;append_attribute(doc.allocate_attribute(&amp;quot;encoding&amp;quot;, &amp;quot;utf-8&amp;quot;));
+ doc.append_node(decl); //finally, append node
+
+ //allocate root node
+ rapidxml::xml_node&amp;lt;&amp;gt;* root = doc.allocate_node(rapidxml::node_element,&amp;quot;root&amp;quot;); //node element is the type of node
+ doc.append_node(root);
+
+
+ //node1
+ rapidxml::xml_node&amp;lt;&amp;gt;* node1 = doc.allocate_node(rapidxml::node_element,&amp;quot;node1&amp;quot;);
+ node1-&amp;gt;value(&amp;quot;Contents of node1&amp;quot;);
+ root-&amp;gt;append_node(node1);
+
+ //root2
+ rapidxml::xml_node&amp;lt;&amp;gt;* root2 = doc.allocate_node(rapidxml::node_element,&amp;quot;root2&amp;quot;);
+ root2-&amp;gt;value(&amp;quot;Contetns of root2&amp;quot;);
+ doc.append_node(root2);
+
+
+ string xml_as_string;
+ rapidxml::print(back_inserter(xml_as_string), doc);//print formatted XML to a string
+
+ out&amp;lt;&amp;lt;xml_as_string;
+ out.close();
+
+ return 0;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;If you compile this you will have quite a lot compile errors. That is because of specific behavior of newer versions of g++. In order to fix the problem add the following code in the &lt;em&gt;rapidxml_print.hpp&lt;/em&gt; file on line 31:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='cpp'&gt;template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print(OutIt out, const xml_node&amp;lt;Ch&amp;gt; &amp;amp;amp;node, int flags = 0);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_node(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_children(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_element_node(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_data_node(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_cdata_node(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_declaration_node(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_comment_node(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_doctype_node(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);
+ template&amp;lt;class OutIt, class Ch&amp;gt;
+ inline OutIt print_pi_node(OutIt out, const xml_node&amp;lt;Ch&amp;gt; *node, int flags, int indent);&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;This will make the internal rapidxml functions visible to g++. Now compile the code, run and look at the file generated. The contents of &lt;em&gt;sample2.xml&lt;/em&gt; should be like this:&lt;/p&gt;
+&lt;div&gt;
+  &lt;pre&gt;&lt;code class='xml'&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&amp;lt;root&amp;gt;
+&amp;lt;node1&amp;gt;Contents of node1&amp;lt;/node1&amp;gt;
+&amp;lt;/root&amp;gt;
+&amp;lt;root2&amp;gt;Contetns of root2&amp;lt;/root2&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;At this point you are able to write and read XML files. If you have any questions feel free to contact me.&lt;/p&gt;</content>
+ </entry>
+ 
+
+</feed>
