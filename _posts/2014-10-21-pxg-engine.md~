@@ -72,7 +72,7 @@ That is why it is good idea to write your own math library to fit particular pur
 The same with standard C++ library - it slows things down both at compile time and runtime - that is why it is good to write your own containers and string classes.
 
 ## Engine Features
-Even though PixelGear engine suffered from bad OO design, it has some features. Here is full feature list of my engine
+Event though PixelGear engine suffered from bad OO design, it has some features. Here is full feature list of my engine
 
 > * Loading meshes with materials from Wavefront OBJ format ( tested with Blender exporter )
 * Loading textures from various image formats ( powered by SOIL )

@@ -4,7 +4,7 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2015-01-21T17:14:06+02:00</updated>
+ <updated>2015-01-24T19:41:51+02:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
@@ -81,7 +81,7 @@
 
 &lt;h2 id='engine_features'&gt;Engine Features&lt;/h2&gt;
 
-&lt;p&gt;Event though PixelGear engine suffered from bad OO design, it has some features. Here is full feature list of my engine&lt;/p&gt;
+&lt;p&gt;Even though PixelGear engine suffered from bad OO design, it has some features. Here is full feature list of my engine&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;ul&gt;
@@ -149,7 +149,7 @@
 
 &lt;h2 id='interpreter'&gt;Interpreter&lt;/h2&gt;
 
-&lt;p&gt;Writing &lt;code&gt;Brainfuck&lt;/code&gt; interpreter is quite a trivial task, so I have written my own. However, there are a lot of others, so you can pick up any of them.&lt;/p&gt;
+&lt;p&gt;Writing &lt;code&gt;Brainfuck&lt;/code&gt; interpreter is quite a trivial task, so I have written &lt;a href='https://github.com/RostakaGmfun/bfuck'&gt;my own&lt;/a&gt;. However, there are a lot of others, so you can pick up any of them.&lt;/p&gt;
 
 &lt;h2 id='syntax'&gt;Syntax&lt;/h2&gt;
 

@@ -16,7 +16,7 @@ It consists of only 8 operators and is not suited for writing practical applicat
 
 ## Interpreter
 
-Writing `Brainfuck` interpreter is quite a trivial task, so I have written [my own](https://github.com/RostakaGmfun/bfuck). However, there are a lot of others, so you can pick up any of them.
+Writing `Brainfuck` interpreter is quite a trivial task, so I have written my own. However, there are a lot of others, so you can pick up any of them.
 
 ## Syntax
 
