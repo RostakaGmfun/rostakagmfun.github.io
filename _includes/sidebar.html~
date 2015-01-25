@@ -4,6 +4,9 @@
 
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
+  <div class="sidebar-avatar">
+     <img src="/public/avatar.png">
+  </div>
   <div class="sidebar-item">
     <p>{{ site.desc }}</p>
   </div>
@@ -34,7 +37,7 @@
   </div>
   <div class="sidebar-item">
     <p>
-      &copy; {{ site.time | date: '%Y' }}. All rights reserved.
+      &copy; 2014-{{ site.time | date: '%Y' }}. All rights reserved.
     </p>
   </div>
 </div>
