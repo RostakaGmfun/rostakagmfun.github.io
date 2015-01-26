@@ -70,7 +70,7 @@ Every wxWidgets application is represented as a class derived from `wxApp`.  So 
             virtual bool OnInit();
     };
 {%endhighlight %}
-Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as IMPLEMENT_APP macro which we place in our app.cpp file:
+Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as `IMPLEMENT_APP` macro which we place in our `app.cpp` file:
 {% highlight cpp linenos %}
  #include "app.h"
 
@@ -108,7 +108,7 @@ Frame::Frame(wxFrame *frame, const wxString& title) //in our constructor we call
 }
 {%endhighlight %}
 
-In our constructor we call `wxFrame` constructor to actually create the window at screen coordinates `(100;100).
+In our constructor we call `wxFrame` constructor to actually create the window at screen coordinates `(100;100)`.
 We also call `wxFrame` member function `SetSize()` to set the window size
 (you also can specify window size in constructor by writing `wxPoint(1024,768)` instead of `wxDefaultSize`).
 To show our window we should include `main.h` file in `app.cpp` and modify our `App::OnInit()` function:
@@ -173,7 +173,7 @@ Frame::Frame(wxFrame *frame, const wxString& title)
 A little explanation is needed here. First, we create our objects.
 The we use `wxMenu::Append()` function to add menu entry.
 `wxMenu::Append()` function takes as parameter an `ID` of event to be handled when the users selects that entry(see below) and a text to display.
-Finally we append our menus to the menu bar with `wxMenuBar::Append() function and set up the menu bar for our window with `SetMenuBar() function.
+Finally we append our menus to the menu bar with `wxMenuBar::Append()` function and set up the menu bar for our window with `SetMenuBar() function.
 
 And now let's add some response to our menu. First of all, place a call to `DECLARE_EVENT_TABLE()` macro in our `Frame` class definition.
  We will define so-called event table later. We will specify the event handler - the callback function which will be called on particular event.
@@ -264,8 +264,8 @@ First, we will make a tab with `wxTreeCtrl` demo.
 {%endhighlight %}
 
 Here we create the `wxNotebook` object as a child for our Frame and a `wxTreeCtrl` object as a child of `wxNotebook`.
- Next, we add a page containing our tree object to the notebook with the function `wxNotebook::AddPage()``.
-  We also set the background color to very light for tree object. You can use `SetBackgroundColour()`` method for any window type.
+ Next, we add a page containing our tree object to the notebook with the function `wxNotebook::AddPage()`.
+  We also set the background color to very light for tree object. You can use `SetBackgroundColour()` method for any window type.
 Next I will demonstrate the usage of `wxTreeCtrl`:
 
 {% highlight cpp linenos %}
@@ -338,7 +338,7 @@ So include `wx/stc/stc.h` header file in `main.h` and add private to `wxStyledTe
     editor->StyleSetBold(wxSTC_C_WORD, true);
 
     //list of c++ 11 keywords from http://en.cppreference.com/w/cpp/keyword
- editor->SetKeyWords(0, wxT("alignas alignof and and_eq asm auto bitand bitor bool break case catch char char16_t char32_t class compl const constexpr "
+ editor->SetKeyWords(0, wxT( "alignas alignof and and_eq asm auto bitand bitor bool break case catch char char16_t char32_t class compl const constexpr "
                             "const_cast continue decltype default delete do double dynamic_cast else"
                             "enum explicit export extern false float for friend goto if inline int long mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public register reinterpret_cast"
                             "return short signed sizeof static static_assert static_cast struct switch template this thread_local throw true try typedef typeid typename union unsigned using virtual void volatile wchar_t while xor xor_eq" ));

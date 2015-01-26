@@ -4,7 +4,7 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2015-01-24T19:44:38+02:00</updated>
+ <updated>2015-01-26T20:00:40+02:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
@@ -301,7 +301,7 @@ $cd build-gtk&lt;/code&gt;&lt;/pre&gt;
             virtual bool OnInit();
     };&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as IMPLEMENT_APP macro which we place in our app.cpp file: &lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
+&lt;p&gt;Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as &lt;code&gt;IMPLEMENT_APP&lt;/code&gt; macro which we place in our &lt;code&gt;app.cpp&lt;/code&gt; file: &lt;pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'&gt;REXML could not parse this XML/HTML: 
 &amp;lt;div&amp;gt;
   &amp;lt;pre&amp;gt;&amp;lt;code class=&amp;apos;cpp&amp;apos;&amp;gt;#include &amp;amp;quot;app.h&amp;amp;quot;&lt;/pre&gt;&lt;/p&gt;
 
@@ -334,10 +334,7 @@ class Frame: public wxFrame //our Frame class derives from wxFrame base class
     SetSize(1024,768); //set the size
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;In our constructor we call &lt;code&gt;wxFrame&lt;/code&gt; constructor to actually create the window at screen coordinates &lt;code&gt;(100;100).
-We also call &lt;/code&gt;wxFrame&lt;code&gt; member function &lt;/code&gt;SetSize()&lt;code&gt; to set the window size
-(you also can specify window size in constructor by writing &lt;/code&gt;wxPoint(1024,768)&lt;code&gt; instead of &lt;/code&gt;wxDefaultSize&lt;code&gt;).
-To show our window we should include &lt;/code&gt;main.h&lt;code&gt; file in &lt;/code&gt;app.cpp&lt;code&gt; and modify our &lt;/code&gt;App::OnInit()&lt;code&gt; function:&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In our constructor we call &lt;code&gt;wxFrame&lt;/code&gt; constructor to actually create the window at screen coordinates &lt;code&gt;(100;100)&lt;/code&gt;. We also call &lt;code&gt;wxFrame&lt;/code&gt; member function &lt;code&gt;SetSize()&lt;/code&gt; to set the window size (you also can specify window size in constructor by writing &lt;code&gt;wxPoint(1024,768)&lt;/code&gt; instead of &lt;code&gt;wxDefaultSize&lt;/code&gt;). To show our window we should include &lt;code&gt;main.h&lt;/code&gt; file in &lt;code&gt;app.cpp&lt;/code&gt; and modify our &lt;code&gt;App::OnInit()&lt;/code&gt; function:&lt;/p&gt;
 &lt;div&gt;
   &lt;pre&gt;&lt;code class='cpp'&gt;bool App::OnInit()
 {
@@ -455,9 +452,7 @@ END_EVENT_TABLE()&lt;/code&gt;&lt;/pre&gt;
  notebook-&amp;gt;AddPage(tree,&amp;quot;Tree example&amp;quot;);
  tree-&amp;gt;SetBackgroundColour(wxColour(240,240,240));&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;Here we create the &lt;code&gt;wxNotebook&lt;/code&gt; object as a child for our Frame and a &lt;code&gt;wxTreeCtrl&lt;/code&gt; object as a child of &lt;code&gt;wxNotebook&lt;/code&gt;. Next, we add a page containing our tree object to the notebook with the function &lt;code&gt;wxNotebook::AddPage()&lt;/code&gt;&lt;code&gt;.
-  We also set the background color to very light for tree object. You can use &lt;/code&gt;SetBackgroundColour()&lt;code&gt;method for any window type.
-Next I will demonstrate the usage of `wxTreeCtrl`:&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Here we create the &lt;code&gt;wxNotebook&lt;/code&gt; object as a child for our Frame and a &lt;code&gt;wxTreeCtrl&lt;/code&gt; object as a child of &lt;code&gt;wxNotebook&lt;/code&gt;. Next, we add a page containing our tree object to the notebook with the function &lt;code&gt;wxNotebook::AddPage()&lt;/code&gt;. We also set the background color to very light for tree object. You can use &lt;code&gt;SetBackgroundColour()&lt;/code&gt; method for any window type. Next I will demonstrate the usage of &lt;code&gt;wxTreeCtrl&lt;/code&gt;:&lt;/p&gt;
 &lt;div&gt;
   &lt;pre&gt;&lt;code class='cpp'&gt;tree-&amp;gt;SetWindowStyle(wxTR_HIDE_ROOT); //hides the real root node to have many roots
     wxTreeItemId root = tree-&amp;gt;AddRoot(&amp;quot;invisible root&amp;quot;);//this root will be invisible

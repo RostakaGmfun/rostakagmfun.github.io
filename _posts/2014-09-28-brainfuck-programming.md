@@ -99,6 +99,7 @@ Since multiplication is addition repeated `n` times, multiplying two numbers in 
 
 At last, we get to the famous `HelloWorld` program.
 Outputting some text in Brainfuck is a real challenge since you should designate each character with appropriate `ASCII` code:
+
 {% highlight bash linenos %}
     Program to print string "Hello world!"
     ASCII codes

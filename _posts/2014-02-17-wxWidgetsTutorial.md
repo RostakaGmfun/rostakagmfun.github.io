@@ -70,7 +70,8 @@ Every wxWidgets application is represented as a class derived from `wxApp`.  So 
             virtual bool OnInit();
     };
 {%endhighlight %}
-Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as IMPLEMENT_APP macro which we place in our app.cpp file:
+Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as `IMPLEMENT_APP` macro which we place in our `app.cpp` file:
+
 {% highlight cpp linenos %}
  #include "app.h"
 
@@ -78,6 +79,7 @@ IMPLEMENT_APP(App);
 {%endhighlight %}
 
 Our App::OnInit() is empty for now:
+
 {% highlight cpp linenos %}
 bool App::OnInit()
 {
@@ -108,7 +110,7 @@ Frame::Frame(wxFrame *frame, const wxString& title) //in our constructor we call
 }
 {%endhighlight %}
 
-In our constructor we call `wxFrame` constructor to actually create the window at screen coordinates `(100;100).
+In our constructor we call `wxFrame` constructor to actually create the window at screen coordinates `(100;100)`.
 We also call `wxFrame` member function `SetSize()` to set the window size
 (you also can specify window size in constructor by writing `wxPoint(1024,768)` instead of `wxDefaultSize`).
 To show our window we should include `main.h` file in `app.cpp` and modify our `App::OnInit()` function:
@@ -264,8 +266,8 @@ First, we will make a tab with `wxTreeCtrl` demo.
 {%endhighlight %}
 
 Here we create the `wxNotebook` object as a child for our Frame and a `wxTreeCtrl` object as a child of `wxNotebook`.
- Next, we add a page containing our tree object to the notebook with the function `wxNotebook::AddPage()``.
-  We also set the background color to very light for tree object. You can use `SetBackgroundColour()`` method for any window type.
+ Next, we add a page containing our tree object to the notebook with the function `wxNotebook::AddPage()`.
+  We also set the background color to very light for tree object. You can use `SetBackgroundColour()` method for any window type.
 Next I will demonstrate the usage of `wxTreeCtrl`:
 
 {% highlight cpp linenos %}
@@ -312,6 +314,7 @@ For full featured text editor with code highlighting the `wxStyledTextCtrl` is u
 This is a wrapper around `Scintilla` code editing component.
 Despite the real complexity of code editor, using `wxStyledTextCtrl` is rather simple and the results are really nice.
 So include `wx/stc/stc.h` header file in `main.h` and add private to `wxStyledTextCtrl` in `private` section. Add the following code to `Frame` constructor:
+
 {% highlight cpp linenos %}
 //create Scintilla text editor object
     editor = new wxStyledTextCtrl(notebook,wxID_ANY,wxDefaultPosition,this->GetSize());

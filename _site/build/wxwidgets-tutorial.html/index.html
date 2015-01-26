@@ -52,6 +52,9 @@
 
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
+  <div class="sidebar-avatar">
+     <img src="/public/avatar.png">
+  </div>
   <div class="sidebar-item">
     <p>The diary of awesome programmer and cool guy.</p>
   </div>
@@ -155,7 +158,7 @@ $cd build-gtk</code></pre>
             virtual bool OnInit();
     };</code></pre>
 </div>
-<p>Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as IMPLEMENT_APP macro which we place in our app.cpp file: <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+<p>Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as <code>IMPLEMENT_APP</code> macro which we place in our <code>app.cpp</code> file: <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
 &lt;div&gt;
   &lt;pre&gt;&lt;code class=&apos;cpp&apos;&gt;#include &amp;quot;app.h&amp;quot;</pre></p>
 
@@ -188,10 +191,7 @@ class Frame: public wxFrame //our Frame class derives from wxFrame base class
     SetSize(1024,768); //set the size
 }</code></pre>
 </div>
-<p>In our constructor we call <code>wxFrame</code> constructor to actually create the window at screen coordinates <code>(100;100).
-We also call </code>wxFrame<code> member function </code>SetSize()<code> to set the window size
-(you also can specify window size in constructor by writing </code>wxPoint(1024,768)<code> instead of </code>wxDefaultSize<code>).
-To show our window we should include </code>main.h<code> file in </code>app.cpp<code> and modify our </code>App::OnInit()<code> function:</code></p>
+<p>In our constructor we call <code>wxFrame</code> constructor to actually create the window at screen coordinates <code>(100;100)</code>. We also call <code>wxFrame</code> member function <code>SetSize()</code> to set the window size (you also can specify window size in constructor by writing <code>wxPoint(1024,768)</code> instead of <code>wxDefaultSize</code>). To show our window we should include <code>main.h</code> file in <code>app.cpp</code> and modify our <code>App::OnInit()</code> function:</p>
 <div>
   <pre><code class='cpp'>bool App::OnInit()
 {
@@ -309,9 +309,7 @@ END_EVENT_TABLE()</code></pre>
  notebook-&gt;AddPage(tree,&quot;Tree example&quot;);
  tree-&gt;SetBackgroundColour(wxColour(240,240,240));</code></pre>
 </div>
-<p>Here we create the <code>wxNotebook</code> object as a child for our Frame and a <code>wxTreeCtrl</code> object as a child of <code>wxNotebook</code>. Next, we add a page containing our tree object to the notebook with the function <code>wxNotebook::AddPage()</code><code>.
-  We also set the background color to very light for tree object. You can use </code>SetBackgroundColour()<code>method for any window type.
-Next I will demonstrate the usage of `wxTreeCtrl`:</code></p>
+<p>Here we create the <code>wxNotebook</code> object as a child for our Frame and a <code>wxTreeCtrl</code> object as a child of <code>wxNotebook</code>. Next, we add a page containing our tree object to the notebook with the function <code>wxNotebook::AddPage()</code>. We also set the background color to very light for tree object. You can use <code>SetBackgroundColour()</code> method for any window type. Next I will demonstrate the usage of <code>wxTreeCtrl</code>:</p>
 <div>
   <pre><code class='cpp'>tree-&gt;SetWindowStyle(wxTR_HIDE_ROOT); //hides the real root node to have many roots
     wxTreeItemId root = tree-&gt;AddRoot(&quot;invisible root&quot;);//this root will be invisible

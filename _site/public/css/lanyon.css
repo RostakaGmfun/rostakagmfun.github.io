@@ -310,19 +310,6 @@ a.sidebar-nav-item:focus {
   margin-bottom: 4em;
 }
 
-/* Avatar image on about page */
-.about-avatar {
-    float: right;
-    border: 1px solid black;
-    border-radius: 30px;
-    -moz-border-radius: 30px;
-    -khtml-border-radius: 30px;
-    -webkit-border-radius: 30px;
-    width: 150px;
-    height: 150px;
-    background: url('/public/avatar.png');
-}
-
 /* Blog post or page title */
 .page-title,
 .post-title,
