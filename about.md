@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-![Avatar](/public/avatar.png)
+![Avatar](/public/pixelavatar.png)
 I am hobbyist programmer from Kyiv, Ukraine, who is interested mainly in C/C++ programming, OpenGL and Linux.
 
 ##Links
