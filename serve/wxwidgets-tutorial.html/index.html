@@ -52,6 +52,9 @@
 
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
+  <div class="sidebar-avatar">
+     <img src="/public/pixelavatar.png">
+  </div>
   <div class="sidebar-item">
     <p>The diary of awesome programmer and cool guy.</p>
   </div>
@@ -155,21 +158,20 @@ $cd build-gtk</code></pre>
             virtual bool OnInit();
     };</code></pre>
 </div>
-<p>Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as IMPLEMENT_APP macro which we place in our app.cpp file: <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
-&lt;div&gt;
-  &lt;pre&gt;&lt;code class=&apos;cpp&apos;&gt;#include &amp;quot;app.h&amp;quot;</pre></p>
+<p>Here we declare a single method OnInit() which will be called once our application starts. In this method we will create our window. The actual application entry point and implementation is defined as <code>IMPLEMENT_APP</code> macro which we place in our <code>app.cpp</code> file:</p>
+<div>
+  <pre><code class='cpp'>#include &quot;app.h&quot;
 
-<p>IMPLEMENT_APP(App);&lt;/code&gt;&lt;/pre&gt; &lt;/div&gt;</p>
+IMPLEMENT_APP(App);</code></pre>
+</div>
+<p>Our App::OnInit() is empty for now:</p>
+<div>
+  <pre><code class='cpp'>bool App::OnInit()
+{
 
-<p>Our App::OnInit() is empty for now: <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
-&lt;div&gt;
-  &lt;pre&gt;&lt;code class=&apos;cpp&apos;&gt;bool App::OnInit()
-{</pre></p>
-
-<pre><code>return true;</code></pre>
-
-<p>}&lt;/code&gt;&lt;/pre&gt; &lt;/div&gt;</p>
-
+    return true;
+}</code></pre>
+</div>
 <p>Now it is time to create the window. Our window class is called Frame and is derived from wxFrame. I placed Frame declaration and definition in main.h and main.cpp respectively. I called those two files as main because the main code is here.</p>
 <div>
   <pre><code class='cpp'>#include &lt;wx/wx.h&gt;
@@ -188,10 +190,7 @@ class Frame: public wxFrame //our Frame class derives from wxFrame base class
     SetSize(1024,768); //set the size
 }</code></pre>
 </div>
-<p>In our constructor we call <code>wxFrame</code> constructor to actually create the window at screen coordinates <code>(100;100).
-We also call </code>wxFrame<code> member function </code>SetSize()<code> to set the window size
-(you also can specify window size in constructor by writing </code>wxPoint(1024,768)<code> instead of </code>wxDefaultSize<code>).
-To show our window we should include </code>main.h<code> file in </code>app.cpp<code> and modify our </code>App::OnInit()<code> function:</code></p>
+<p>In our constructor we call <code>wxFrame</code> constructor to actually create the window at screen coordinates <code>(100;100)</code>. We also call <code>wxFrame</code> member function <code>SetSize()</code> to set the window size (you also can specify window size in constructor by writing <code>wxPoint(1024,768)</code> instead of <code>wxDefaultSize</code>). To show our window we should include <code>main.h</code> file in <code>app.cpp</code> and modify our <code>App::OnInit()</code> function:</p>
 <div>
   <pre><code class='cpp'>bool App::OnInit()
 {
@@ -309,9 +308,7 @@ END_EVENT_TABLE()</code></pre>
  notebook-&gt;AddPage(tree,&quot;Tree example&quot;);
  tree-&gt;SetBackgroundColour(wxColour(240,240,240));</code></pre>
 </div>
-<p>Here we create the <code>wxNotebook</code> object as a child for our Frame and a <code>wxTreeCtrl</code> object as a child of <code>wxNotebook</code>. Next, we add a page containing our tree object to the notebook with the function <code>wxNotebook::AddPage()</code><code>.
-  We also set the background color to very light for tree object. You can use </code>SetBackgroundColour()<code>method for any window type.
-Next I will demonstrate the usage of `wxTreeCtrl`:</code></p>
+<p>Here we create the <code>wxNotebook</code> object as a child for our Frame and a <code>wxTreeCtrl</code> object as a child of <code>wxNotebook</code>. Next, we add a page containing our tree object to the notebook with the function <code>wxNotebook::AddPage()</code>. We also set the background color to very light for tree object. You can use <code>SetBackgroundColour()</code> method for any window type. Next I will demonstrate the usage of <code>wxTreeCtrl</code>:</p>
 <div>
   <pre><code class='cpp'>tree-&gt;SetWindowStyle(wxTR_HIDE_ROOT); //hides the real root node to have many roots
     wxTreeItemId root = tree-&gt;AddRoot(&quot;invisible root&quot;);//this root will be invisible
@@ -339,36 +336,38 @@ Next I will demonstrate the usage of `wxTreeCtrl`:</code></p>
 
 <p>We use <code>wxTreeEvent</code> object to get the selected item. Next we check whether this item has no child nodes(so it is node itself) and if so display the message box with the name of the selected node. If one of the roots was selected we expand it to show child nodes. To specify this function as the event handler for tree object, we use the <code>EVT_TREE_ITEM_ACTIVATED</code> macro. We specify <code>wxID_ANY</code> as <code>ID</code> for our event because we have only one tree object.</p>
 
-<p>Well, let&#8217;s add another tab to our window. We will place a code editor there. For full featured text editor with code highlighting the <code>wxStyledTextCtrl</code> is used. This is a wrapper around <code>Scintilla</code> code editing component. Despite the real complexity of code editor, using <code>wxStyledTextCtrl</code> is rather simple and the results are really nice. So include <code>wx/stc/stc.h</code> header file in <code>main.h</code> and add private to <code>wxStyledTextCtrl</code> in <code>private</code> section. Add the following code to <code>Frame</code> constructor: <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
-&lt;div&gt;
-  &lt;pre&gt;&lt;code class=&apos;cpp&apos;&gt;//create Scintilla text editor object
-    editor = new wxStyledTextCtrl(notebook,wxID_ANY,wxDefaultPosition,this-&amp;gt;GetSize());
-    notebook-&amp;gt;AddPage(editor,&amp;quot;Editor&amp;quot;);
+<p>Well, let&#8217;s add another tab to our window. We will place a code editor there. For full featured text editor with code highlighting the <code>wxStyledTextCtrl</code> is used. This is a wrapper around <code>Scintilla</code> code editing component. Despite the real complexity of code editor, using <code>wxStyledTextCtrl</code> is rather simple and the results are really nice. So include <code>wx/stc/stc.h</code> header file in <code>main.h</code> and add private to <code>wxStyledTextCtrl</code> in <code>private</code> section. Add the following code to <code>Frame</code> constructor:</p>
+<div>
+  <pre><code class='cpp'>//create Scintilla text editor object
+    editor = new wxStyledTextCtrl(notebook,wxID_ANY,wxDefaultPosition,this-&gt;GetSize());
+    notebook-&gt;AddPage(editor,&quot;Editor&quot;);
  //set our font for the whole text. We should specify this before defining styles for particular things (keywords, numbers, string, etc.)
  wxFont font(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL);
- editor-&amp;gt;StyleSetFont(wxSTC_STYLE_DEFAULT,font);
-    editor-&amp;gt;StyleSetForeground (wxSTC_STYLE_LINENUMBER, wxColour (75, 75, 75) );
-    editor-&amp;gt;SetCaretLineVisible(true); //enable current line highlighting
-    editor-&amp;gt;SetCaretLineBackground(wxColour(245,245,255)); //very light highliting color for active line
-    editor-&amp;gt;StyleSetBackground (wxSTC_STYLE_LINENUMBER, wxColour (220, 220, 220));
-    editor-&amp;gt;SetMarginWidth(0,55);
-    editor-&amp;gt;SetMarginType (0, wxSTC_MARGIN_NUMBER);
-    editor-&amp;gt;StyleClearAll();
-    editor-&amp;gt;SetLexer(wxSTC_LEX_CPP);
-    editor-&amp;gt;StyleSetForeground (wxSTC_C_STRING,wxColour(150,0,0));
-    editor-&amp;gt;StyleSetForeground (wxSTC_C_PREPROCESSOR,wxColour(0,150,105));
-    editor-&amp;gt;StyleSetForeground (wxSTC_C_IDENTIFIER,wxColour(0,0,0));
-    editor-&amp;gt;StyleSetForeground (wxSTC_C_NUMBER,wxColour(0,150,0));
-    editor-&amp;gt;StyleSetForeground (wxSTC_C_CHARACTER,wxColour(150,0,0));
-    editor-&amp;gt;StyleSetForeground (wxSTC_C_WORD,wxColour(32,100,200));
-    editor-&amp;gt;StyleSetForeground (wxSTC_C_COMMENT,wxColour(150,150,150));
-    editor-&amp;gt;StyleSetForeground (wxSTC_C_COMMENTLINE,wxColour(150,150,150));
-    editor-&amp;gt;StyleSetBold(wxSTC_C_WORD, true);</pre></p>
+ editor-&gt;StyleSetFont(wxSTC_STYLE_DEFAULT,font);
+    editor-&gt;StyleSetForeground (wxSTC_STYLE_LINENUMBER, wxColour (75, 75, 75) );
+    editor-&gt;SetCaretLineVisible(true); //enable current line highlighting
+    editor-&gt;SetCaretLineBackground(wxColour(245,245,255)); //very light highliting color for active line
+    editor-&gt;StyleSetBackground (wxSTC_STYLE_LINENUMBER, wxColour (220, 220, 220));
+    editor-&gt;SetMarginWidth(0,55);
+    editor-&gt;SetMarginType (0, wxSTC_MARGIN_NUMBER);
+    editor-&gt;StyleClearAll();
+    editor-&gt;SetLexer(wxSTC_LEX_CPP);
+    editor-&gt;StyleSetForeground (wxSTC_C_STRING,wxColour(150,0,0));
+    editor-&gt;StyleSetForeground (wxSTC_C_PREPROCESSOR,wxColour(0,150,105));
+    editor-&gt;StyleSetForeground (wxSTC_C_IDENTIFIER,wxColour(0,0,0));
+    editor-&gt;StyleSetForeground (wxSTC_C_NUMBER,wxColour(0,150,0));
+    editor-&gt;StyleSetForeground (wxSTC_C_CHARACTER,wxColour(150,0,0));
+    editor-&gt;StyleSetForeground (wxSTC_C_WORD,wxColour(32,100,200));
+    editor-&gt;StyleSetForeground (wxSTC_C_COMMENT,wxColour(150,150,150));
+    editor-&gt;StyleSetForeground (wxSTC_C_COMMENTLINE,wxColour(150,150,150));
+    editor-&gt;StyleSetBold(wxSTC_C_WORD, true);
 
-<pre><code>//list of c++ 11 keywords from http://en.cppreference.com/w/cpp/keyword</code></pre>
-
-<p>editor-&#62;SetKeyWords(0, wxT( &#34;alignas alignof and and_eq asm auto bitand bitor bool break case catch char char16_t char32_t class compl const constexpr &#34; &#34;const_cast continue decltype default delete do double dynamic_cast else&#34; &#34;enum explicit export extern false float for friend goto if inline int long mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public register reinterpret_cast&#34; &#34;return short signed sizeof static static_assert static_cast struct switch template this thread_local throw true try typedef typeid typename union unsigned using virtual void volatile wchar_t while xor xor_eq&#34; ));&lt;/code&gt;&lt;/pre&gt; &lt;/div&gt;</p>
-
+    //list of c++ 11 keywords from http://en.cppreference.com/w/cpp/keyword
+ editor-&gt;SetKeyWords(0, wxT( &quot;alignas alignof and and_eq asm auto bitand bitor bool break case catch char char16_t char32_t class compl const constexpr &quot;
+                            &quot;const_cast continue decltype default delete do double dynamic_cast else&quot;
+                            &quot;enum explicit export extern false float for friend goto if inline int long mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public register reinterpret_cast&quot;
+                            &quot;return short signed sizeof static static_assert static_cast struct switch template this thread_local throw true try typedef typeid typename union unsigned using virtual void volatile wchar_t while xor xor_eq&quot; ));</code></pre>
+</div>
 <p>First we create the editor object and add it as a page to our notebook. Next we specify a global font before setting particular styling for keywords, strings, numbers etc. After that we enable current line highlighting and set the highlight color. We also specify the left margin attributes for line numbers and then begin styling the C++ lexicon. First we choose the lexer as <code>wxSTC_LEX_CPP</code>. There are a number of predefined lexers. To see the corresponding defines look into <code>wx/stc/stc.h</code> file. After that we specify individual colors for strings(enclosed in double quotes), preprocessor, identifiers, numbers, characters (enclosed in a single quotes), keywords, line comments, and multiline comments. We also enable bold font for keywords. What goes next is a list of all C++ 11 keywords for keyword set 0 (that is our <code>wxSTC_C_WORD</code>).</p>
 
 <p>Now lets add an ability to open files. We will define <code>Frame::OnOpen()</code> event handler. Try adding the event handler to the event table on your own. And here is the implementation of <code>Frame::OnOpen()</code> function:</p>

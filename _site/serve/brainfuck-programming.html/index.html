@@ -52,6 +52,9 @@
 
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
+  <div class="sidebar-avatar">
+     <img src="/public/pixelavatar.png">
+  </div>
   <div class="sidebar-item">
     <p>The diary of awesome programmer and cool guy.</p>
   </div>
@@ -185,9 +188,9 @@
 
 <h2 id='helloworld_program'>HelloWorld Program</h2>
 
-<p>At last, we get to the famous <code>HelloWorld</code> program. Outputting some text in Brainfuck is a real challenge since you should designate each character with appropriate <code>ASCII</code> code: <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
-&lt;div&gt;
-  &lt;pre&gt;&lt;code class=&apos;bash&apos;&gt;Program to print string &amp;quot;Hello world!&amp;quot;
+<p>At last, we get to the famous <code>HelloWorld</code> program. Outputting some text in Brainfuck is a real challenge since you should designate each character with appropriate <code>ASCII</code> code:</p>
+<div>
+  <pre><code class='bash'>Program to print string &quot;Hello world!&quot;
     ASCII codes
     H 72 7*10 plus 2
     e 101 10*10 plus 1
@@ -200,21 +203,20 @@
     l 108
     d 100 10*10
     ! 33 32 plus 1
-    newline 10</pre></p>
+    newline 10
 
-<pre><code>+++++ ++ [&amp;gt; +++++ +++++ &amp;lt;-] &amp;gt;++. print H
-&amp;gt; +++++ +++++ [&amp;gt; +++++ +++++ &amp;lt;-] &amp;gt;+. print e
-+++++ ++ .. print ll
-+++ . print o
-&amp;gt; ++++ [&amp;gt; +++++ +++ &amp;lt;-] &amp;gt;. print space
-&amp;gt; +++++ +++ [&amp;gt; +++++ +++++ &amp;lt;-] &amp;gt; +++++ ++ . print W
-&amp;lt;&amp;lt;&amp;lt;&amp;lt; . print o
-+++ . print r
------ - . print l
------ --- . print d
-&amp;gt;&amp;gt;+. print !&lt;/code&gt;&lt;/pre&gt;</code></pre>
-<pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
-&lt;/div&gt;</pre>
+    +++++ ++ [&gt; +++++ +++++ &lt;-] &gt;++. print H
+    &gt; +++++ +++++ [&gt; +++++ +++++ &lt;-] &gt;+. print e
+    +++++ ++ .. print ll
+    +++ . print o
+    &gt; ++++ [&gt; +++++ +++ &lt;-] &gt;. print space
+    &gt; +++++ +++ [&gt; +++++ +++++ &lt;-] &gt; +++++ ++ . print W
+    &lt;&lt;&lt;&lt; . print o
+    +++ . print r
+    ----- - . print l
+    ----- --- . print d
+    &gt;&gt;+. print !</code></pre>
+</div>
 <h2 id='conclusion'>Conclusion</h2>
 
 <p>Brainfuck is really interesting programming language which makes you think out of the box, especially while solving complex tasks and optimizing your programs.</p>

@@ -166,6 +166,13 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   color: #fff;
 }
+
+.sidebar-avatar {
+    padding: 1rem 1rem 0rem 1.5rem;
+    display: inline-block;
+    margin-bottom: -1rem; 
+}
+
 .sidebar-item {
   padding: 1rem;
   display:inline-block;
