@@ -4,7 +4,7 @@
  <title>Awesome Programmer</title>
  <link href="/atom.xml" rel="self"/>
  <link href="/"/>
- <updated>2015-02-20T21:22:55+02:00</updated>
+ <updated>2015-02-20T21:35:37+02:00</updated>
  <id></id>
  <author>
    <name>Rostyslav Kurylo</name>
@@ -37,7 +37,7 @@
 
 &lt;p&gt;If you&amp;#8217;re not well-satisfied with previous tip, you can count lines in your repository proving once more that you haven&amp;#8217;t done much progress since last time you&amp;#8217;ve slept:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$git ls-files | xargs wc -l&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$ git ls-files | xargs wc -l&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;However, you should remember, my young padawan, that &amp;#8220;measuring programming progress by lines of code is like measuring aircraft building progress by weight.&amp;#8221; (Bill Gates), so don&amp;#8217;t concentrate a lot on how much code have you written, but pay attention to stability and quality of your software.&lt;/p&gt;
 
