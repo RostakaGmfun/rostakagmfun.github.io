@@ -4,7 +4,7 @@ relative_permalinks: true
 
 # Setup
 title:            Awesome Programmer
-tagline:          RostakaGmfun's blog
+tagline:          Code, cookies, universe
 paginate:         5
 baseurl:          /
 author:
@@ -16,8 +16,9 @@ author:
 version:          1.0.0
 github:
   repo:           https://github.com/RostakaGmfun/rostakagmfun.github.io
-description:      The diary of awesome programmer and cool guy. Programming, 3d graphics, c++, game developing
+description:      The diary of awesome programmer and cool guy. Programming, 3d graphics, c++, gamedev, opengl, linux, coding, rostakagmfun
 desc:             The diary of awesome programmer and cool guy.
-keywords:         programming, 3d graphics, c++, game developing, OpenGL
+keywords:         programming, 3d graphics, c++, gamedev, OpenGL, linux, coding, rostakagmfun
+motto:            CEO of the universe. Pissing on your heads.
 
 exclude: [update.sh]
