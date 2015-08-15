@@ -4,8 +4,26 @@ title: My Projects
 ---
 Here is a list of my projects, which you can find on my [GitHub page](https:/github.com/RostakaGmfun).
 
+##Kaa
+On summer 2015 I've made a lot of contributions to open-source IoT platoform `Kaa`.
+Particularly, I've ported C Endpoint SDK to `ESP8266` chip (with WiFi onboard).
+
+* Language: C
+* [Repository](https://github.com/kaaproject/kaa)
+* [Project site](http://kaaproject.org/)
+
+##ESP8266-AT-Kaa
+This project is based on Kaa integration into `ESP8266` platform.
+The original `AT` firmware for `ESP8266` provides user with ability to estabilish a connection via WiFi, 
+and turn `ESP8266` into a TCP server (as a WiFi AP) using a set of commands send through a serial port. 
+`ESP8266-AT-Kaa` is a clone of original firmware, but with support of Kaa transport channels.
+This is currently work in progress and still does not support all the features that are planned.
+
+* Language: C
+* [Source code](https://github.com/kaaproject/ESP8266-AT-Kaa)
+
 ##modwm
-`modwm` is a X11 window manager. This is the project I am currently working on despite the lack of time.
+`modwm` is a X11 window manager. The project is dead :(
 
 * Language: C
 * [Source code](https://github.com/RostakaGmfun/modwm)
