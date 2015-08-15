@@ -4,7 +4,7 @@ title: About
 ---
 
 ![Avatar](/public/pixelavatar.png)
-I am hobbyist programmer from Kyiv, Ukraine, who is interested mainly in `C/C++` programming, low-level `Assembly` and `C` for `x86` and `ARM`, `OpenGL`and `Linux`.
+I am hobbyist programmer from Kyiv, Ukraine, who is interested mainly in `C/C++` programming, `OpenGL`, `Linux`, low-level `Assembly` and `C` for `x86` and `ARM`.
 I have been using `Linux`, `Debian` particularly, since 2013, and became a `vim` user in January, 2015.
 
 ##Professional experience
