@@ -16,6 +16,6 @@ A typical kernel developemnt cycle for Raspberry Pi may consits of copying kerne
 However, this appears to be rather cumbersome, so I've came up with an idea of writing tiny bootloader over UART (Universal Asynchronous Raceiver/Transmitter) 
 for personal purposes. The source code is, as usual, on [github](https://github.com/RostakaGmfun/rpi-uart-boot).
 
-Using the bootloaer is pretty simple: just copy the `kernel.img` to MicroSD and upload your own kernels using `rpi-uart-boot.py` tool.
+Using the bootloader is pretty simple: just copy the `kernel.img` to MicroSD and upload your own kernels using `rpi-uart-boot.py` tool.
 The image will be loaded into `0x8000` address, just like the GPU bootloader does.
 For more detailed instruction you can refer to `README.md` file in the root of source code repository.
