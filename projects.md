@@ -4,6 +4,13 @@ title: My Projects
 ---
 Here is a list of my projects, which you can find on my [GitHub page](https:/github.com/RostakaGmfun).
 
+##rpi-uart-boot
+A simple bootloader over UART for Raspberry Pi 1 (tested on model B+)
+
+* Languages: C, ARM assembler, Python
+* [Source code](https://github.com/RostakaGmfun/rpi-uart-boot)
+* [Article](http://rostakagmfun.github.io/uploading-rpi-kernels-over-uart.html)
+
 ##Kaa
 On summer 2015 I've made a lot of contributions to open-source IoT platoform `Kaa`.
 Particularly, I've ported C Endpoint SDK to `ESP8266` chip (with WiFi onboard).
