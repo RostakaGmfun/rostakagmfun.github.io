@@ -8,6 +8,7 @@ keywords: kernel-development RaspberryPi bootloader programming C assembler UART
 category: raspberrypi
 comments: true
 ---
+![My RPI](public/rpi-uart-boot/myrpi.jpg)
 Recently I've bought Raspberry Pi Model B+ in order to practice low-level system and kernel programming. But before diving immediately into kernel development,
 I wrote a helpful tool to make my development easier and more pleasant.
 
