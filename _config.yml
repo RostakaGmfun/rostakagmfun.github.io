@@ -5,7 +5,6 @@ relative_permalinks: true
 # Setup
 title:            Awesome Programmer
 tagline:          Code, cookies, universe
-paginate:         5
 baseurl:          /
 author:
   name:           Rostyslav Kurylo
@@ -16,9 +15,9 @@ author:
 version:          1.0.0
 github:
   repo:           https://github.com/RostakaGmfun/rostakagmfun.github.io
-description:      The diary of awesome programmer and cool guy. Programming, 3d graphics, c++, gamedev, opengl, linux, coding, rostakagmfun
+description:      The diary of awesome programmer and cool guy. Programming, 3d graphics, c++, gamedev, opengl, linux, coding, rostakagmfun, raspberrypi, embedded
 desc:             The diary of awesome programmer and cool guy.
-keywords:         programming, 3d graphics, c++, gamedev, OpenGL, linux, coding, rostakagmfun
+keywords:         programming, 3d graphics, c++, gamedev, OpenGL, linux, coding, rostakagmfun, rapserrypi, c, low-level, embedded, kernel, development
 motto:            CEO of the universe. Pissing on your heads.
 
 exclude: [update.sh]

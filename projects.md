@@ -44,7 +44,6 @@ This is currently work in progress and still does not support all the features t
 * [Article about Brainfuck](http://rostakagmfun.github.io/brainfuck-programming.html)
 
 ##PixelGear Engine
-![pxg-logo](/public/pxg-logo.png)
 I have been writing this game engine for a few months and then
 just gave up because the source code was cluttered a lot.
 It uses SDL2 for window management, OpenGL 3 for graphics drawing 
