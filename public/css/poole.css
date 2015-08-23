@@ -53,9 +53,9 @@ html {
   line-height: 1.5;
   font-weight:600;
 }
-@media (min-width: 42em) {
+@media (max-width: 20em) {
   html {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
@@ -505,13 +505,14 @@ a.pagination-item:hover {
 
 
 .navbar {
+    text-align: center;
 }
 
 .navbar li {
   list-style: none;
   display: block;
-  padding: 1rem;
-  margin: 2rem;
+  padding: 1rem 0;
+  margin: 1rem 0;
 }
 
 .navbar ul {
