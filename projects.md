@@ -1,6 +1,6 @@
 ---
 layout: page
-title: My Projects
+title: Projects
 ---
 Here is a list of my projects, which you can find on my [GitHub page](https:/github.com/RostakaGmfun).
 

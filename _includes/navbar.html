@@ -1,0 +1,15 @@
+<div class="navbar">
+    <li>
+        <ul> <a class="navbar-link" href="{{ site.baseurl }}">Home</a> </ul>
+        {% assign pages_list = site.pages | sort:"url" %}
+        {% for node in pages_list %}
+            {% if node.title != null %}
+                {% if node.layout == "page" %}
+                    <ul> <a class="navbar-link" href="{{ node.url }}">{{ node.title }}</a> </ul>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <ul> <a class="navbar-link" href="https://github.com/RostakaGmfun" target="_blank">GitHub</a> </ul>
+        <ul> <a class="navbar-link" href="https://twitter.com/RostakaGmfun" target="_blank">Twitter</a> </ul>
+    </li>
+</div>

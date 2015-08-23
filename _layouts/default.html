@@ -3,12 +3,7 @@
 
   {% include head.html %}
 
-  <body class="sidebar-overlay theme-cool">
-
-    {% include sidebar.html %}
-
-    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
-         content to avoid any CSS collisions with our real content. -->
+  <body>
     <div class="wrap">
       <div class="masthead">
         <div class="container">
@@ -18,8 +13,8 @@
           </h3>
         </div>
       </div>
-
       <div class="container content">
+        {% include navbar.html %}
         {{ content }}
       </div>
     </div>

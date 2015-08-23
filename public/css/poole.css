@@ -53,7 +53,7 @@ html {
   line-height: 1.5;
   font-weight:600;
 }
-@media (min-width: 38em) {
+@media (min-width: 42em) {
   html {
     font-size: 16px;
   }
@@ -303,7 +303,7 @@ tbody tr:nth-child(odd) th {
  */
 
 .container {
-  max-width: 45rem;
+  max-width: 50rem;
   padding-left:  1rem;
   padding-right: 1rem;
   margin-left:  auto;
@@ -489,6 +489,7 @@ a.pagination-item:hover {
 .sidebar-link {
   display:inline;
 }
+
 @media (min-width: 10rem) {
   .sidebar-item {
     padding: 1.5rem;
@@ -499,3 +500,27 @@ a.pagination-item:hover {
   }
 }
 
+
+.navbar {
+}
+
+.navbar li {
+  list-style: none;
+  display: block;
+  padding: 1rem;
+  margin: 2rem;
+}
+
+.navbar ul {
+    display: inline;
+    padding: 0;
+}
+
+.navbar-link {
+    display: inline;
+    text-transform: lowercase;
+}
+
+.navbar-link:before, .navbar-link:after {
+    content: "/";
+}
