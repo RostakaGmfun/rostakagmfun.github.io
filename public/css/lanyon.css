@@ -168,14 +168,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar-avatar {
-    padding: 1rem 1rem 0rem 1.5rem;
+    padding: 0.5rem 0.5rem 0rem 1.5rem;
     display: inline-block;
     margin-bottom: -1rem; 
 }
 
 .sidebar-item {
-  padding: 1rem;
+  padding: 0.5rem;
   display:inline-block;
+}
+
+.sidebar p {
+  margin-bottom: 0;
+  margin-left: 1.5em;
+  margin-top: 1em;
 }
 .sidebar-item p:last-child {
   margin-bottom: 0;
