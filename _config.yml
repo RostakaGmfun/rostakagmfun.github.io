@@ -18,6 +18,7 @@ github:
 description:      The diary of awesome programmer and cool guy. Programming, 3d graphics, c++, gamedev, opengl, linux, coding, rostakagmfun
 desc:             The diary of awesome programmer and cool guy.
 keywords:         programming, 3d graphics, c++, gamedev, OpenGL, linux, coding, rostakagmfun
-motto:            CEO of the universe. Pissing on your heads.
+motto:            Shooting in the foot does not hurt much if you shoot it at compile time (c)
 
 exclude: [update.sh]
+gems: [jekyll-paginate]
