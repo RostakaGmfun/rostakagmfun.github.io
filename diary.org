@@ -10,7 +10,7 @@
 :CUSTOM_ID: using-nixops
 :END:
 I wanted to try out [[https://nixos.org/NixOps][NixOps]] for long time and, finally, I've found some free time to play with it.
-NixOps is a IaaC (Infrastructure as a Code) tool based on Nix, a purely functional package manager,
+NixOps is an IaC (Infrastructure as Code) tool based on Nix, a purely functional package manager,
 which I have been using together with [[https://nixos.org/NixOs][NixOs]] Linux distribution for about two months.
 
 Interestingly, this is a first time I've tried to use IaaC tools,
@@ -47,7 +47,7 @@ As I read through it, I had to google some info about /bloom filters/ and /cucko
 
 A few notes on bloom filter:
 
-- Bloom filter is a probabilistic data structure that implements a ~set~ abstract data type.
+- Bloom filter is a probabilistic data structure that implements a ~Set~ abstract data type.
 - Probabilistic means that operations on the DS don't give correct results all the time.
 - Supports ~add~ and ~test~ operations with constant time complexity. ~delete~ is not supported in classic implementation (TODO: investigate).
 - ~test~ deterministically answers if the element is not present in the set but may emit false positives.
@@ -56,7 +56,7 @@ A few notes on bloom filter:
 - To check if an element exists in a set, it is hashed and corresponding bits are compared.
 - The smaller is the load factor, the smaller is the probability of false positives.
 - Applications: quickly check if some data is present on slow storage to avoid reading from it.
-- [[https://www.jasondavies.com/bloomfilter/][Vizualization]].
+- [[https://www.jasondavies.com/bloomfilter/][Visualization]].
 
 A bit on cuckoo hashing:
 
