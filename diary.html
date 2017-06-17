@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>RostakaGmfun's diary</title>
+<!-- 2017-06-17 Sat 19:34 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Rostyslav Kurylo">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style type="text/css">
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script type="text/javascript">
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-9"><h1 class="title">RostakaGmfun's diary</h1>
+<p>
+<i>Some notes on my daily software development adventures.</i>
+</p>
+
+<div id="outline-container-using-nixops" class="outline-2">
+<h2 id="using-nixops"><a id="sec-" name="sec-"></a>Trying out NixOps</h2>
+<div class="outline-text-2" id="text-using-nixops">
+<p>
+I wanted to try out <a href="https://nixos.org/NixOps">NixOps</a> for long time and, finally, I've found some free time to play with it.
+NixOps is a IaaC (Infrastructure as a Code) tool based on Nix, a purely functional package manager,
+which I have been using together with <a href="https://nixos.org/NixOs">NixOs</a> Linux distribution for about two months.
+</p>
+
+<p>
+Interestingly, this is a first time I've tried to use IaaC tools,
+and I believe it is a good thing to go functional from the beginning :)
+What I have done with NixOps so far, is a VirtualBox server with a NixOS container running Apache server with `Hello, world` page.
+</p>
+
+<p>
+What is good about functional approach to infrastructure it the precise reproducibility of deployment
+thanks to purity of Nix expressions.
+An <i>expression</i>, a pure function in Nix, declaratively defines a software package
+or the entire environment, which consits of multiple packages and system configurations.
+Since the expressions are pure, the global state of the system is never mutated, which means that
+it is impossible (well, in theory) to introduce broken states while redeploying with Nix.
+</p>
+</div>
+</div>
+
+<div id="outline-container-benchmarking" class="outline-2">
+<h2 id="benchmarking"><a id="sec-" name="sec-"></a>Benchmarking my kv storage with google/benchmark</h2>
+<div class="outline-text-2" id="text-benchmarking">
+<p>
+As I am learning about persistent key-value storages,
+I decided to implement simple storage on my own in order to apply knowledge I have acquired.
+</p>
+
+<p>
+I planned to go with simplest ever persistent key-value storage and improve it iteratively
+by employing smart techniques I discover in some articles and <i>Designing Data-Intensive Applications</i> book.
+</p>
+
+<p>
+In order to measure my progress, I started writing benchmarks using the <a href="https://github.com/google/benchmark">google/benchmark</a> library,
+a feature-rich benchmarking framework for C++.
+</p>
+</div>
+</div>
+
+<div id="outline-container-bloom-filters-cuckoo-hashing" class="outline-2">
+<h2 id="bloom-filters-cuckoo-hashing"><a id="sec-" name="sec-"></a>Key-value storages, bloom filter and cuckoo hashing</h2>
+<div class="outline-text-2" id="text-bloom-filters-cuckoo-hashing">
+<p>
+I have been learning about design and architecture of persistent key-value storages for a few days,
+and today I started reading a paper on <a href="http://www.vldb.org/pvldb/vldb2010/papers/I04.pdf">FlashStore</a>.
+As I read through it, I had to google some info about <i>bloom filters</i> and <i>cuckoo hashing</i>.
+</p>
+
+<p>
+A few notes on bloom filter:
+</p>
+
+<ul class="org-ul">
+<li>Bloom filter is a probabilistic data structure that implements a set abstract data type.
+</li>
+<li>Probabilistic means that operations on the DS don't give correct results all the time.
+</li>
+<li>Supports <code>add</code> and <code>test</code> operations with constant time complexity. <code>delete</code> is not supported in classic implementation (TODO: investigate).
+</li>
+<li><code>test</code> deterministically answers if the element is not present in the set but may emit false positives.
+</li>
+<li>Bloom filters are implemented as a bitmap and a number of hash functions, which produce bit positions.
+</li>
+<li><code>add</code> hashes the value with each hash function and sets corresponding bits to 1.
+</li>
+<li>To check if an element exists in a set, it is hashed and corresponding bits are compared.
+</li>
+<li>The smaller is the load factor, the smaller is the probability of false positives.
+</li>
+<li>Applications: quickly check if some data is present on slow storage to avoid reading from it.
+</li>
+<li><a href="https://www.jasondavies.com/bloomfilter/">Vizualization</a>.
+</li>
+</ul>
+
+<p>
+A bit on cuckoo hashing:
+</p>
+
+<ul class="org-ul">
+<li>Implements dictionary abstract data type with worst-case constant time for lookup (compare to traditional hash tables (open addressing/chaining) with linear worst-case lookup).
+</li>
+<li>Cuckoo hashing is implemented as two hash tables with independent hash functions thus providing two places where new element can be inserted.
+</li>
+<li>Collision occurs when both places are occupated.
+</li>
+<li>The collision is resolved with placing the other value at another hash table, hence the name cuckoo: new-born cuckoo birds throw their sibling eggs from the nest (I hadn't known this before!).
+</li>
+<li>The process of moving elements lasts until a free cell is found or a loop is detected. In the latter case the table is rehashed.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-hello-org" class="outline-2">
+<h2 id="hello-org"><a id="sec-" name="sec-"></a>First day using org-mode</h2>
+<div class="outline-text-2" id="text-hello-org">
+<p>
+So I decided to maintain a list of tiny notes on programming-related topics, and because I have started using Emacs a few weeks ago, I took up org-mode for this.
+</p>
+
+<p>
+Traditional blogging takes much time and skill and so I consider maintaining such a diary a perfect solution if you lack on of these (or both, as I do).
+</p>
+
+<p>
+Furthermore, as a side profit, summarizing improves learning productivity.
+</p>
+</div>
+</div>
+</div><div class="col-md-3"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#using-nixops">Trying out NixOps</a></li>
+<li><a href="#benchmarking">Benchmarking my kv storage with google/benchmark</a></li>
+<li><a href="#bloom-filters-cuckoo-hashing">Key-value storages, bloom filter and cuckoo hashing</a></li>
+<li><a href="#hello-org">First day using org-mode</a></li>
+</ul>
+</div>
+</nav>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Rostyslav Kurylo</p>
+<p class="date">Created: 2017-06-17 Sat 19:34</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org-mode</a> 9.0.7)</p>
+</div>
+</footer>
+</body>
+</html>

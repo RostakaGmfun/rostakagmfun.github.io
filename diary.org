@@ -1,0 +1,76 @@
+#+TITLE: RostakaGmfun's diary
+#+AUTHOR: Rostyslav Kurylo
+#+EMAIL: rostawesomegd@gmail.com
+#+options: num:nil toc:t
+
+/Some notes on my daily software development adventures./
+
+** Trying out NixOps
+:PROPERTIES:
+:CUSTOM_ID: using-nixops
+:END:
+I wanted to try out [[https://nixos.org/NixOps][NixOps]] for long time and, finally, I've found some free time to play with it.
+NixOps is a IaaC (Infrastructure as a Code) tool based on Nix, a purely functional package manager,
+which I have been using together with [[https://nixos.org/NixOs][NixOs]] Linux distribution for about two months.
+
+Interestingly, this is a first time I've tried to use IaaC tools,
+and I believe it is a good thing to go functional from the beginning :)
+What I have done with NixOps so far, is a VirtualBox server with a NixOS container running Apache server with `Hello, world` page.
+
+What is good about functional approach to infrastructure it the precise reproducibility of deployment
+thanks to purity of Nix expressions.
+An /expression/, a pure function in Nix, declaratively defines a software package
+or the entire environment, which consits of multiple packages and system configurations.
+Since the expressions are pure, the global state of the system is never mutated, which means that
+it is impossible (well, in theory) to introduce broken states while redeploying with Nix.
+
+** Benchmarking my kv storage with google/benchmark
+:PROPERTIES:
+:CUSTOM_ID: benchmarking
+:END:
+As I am learning about persistent key-value storages,
+I decided to implement simple storage on my own in order to apply knowledge I have acquired.
+
+I planned to go with simplest ever persistent key-value storage and improve it iteratively
+by employing smart techniques I discover in some articles and /Designing Data-Intensive Applications/ book.
+
+In order to measure my progress, I started writing benchmarks using the [[https://github.com/google/benchmark][google/benchmark]] library,
+a feature-rich benchmarking framework for C++.
+
+** Key-value storages, bloom filter and cuckoo hashing
+:PROPERTIES:
+:CUSTOM_ID: bloom-filters-cuckoo-hashing
+:END:
+I have been learning about design and architecture of persistent key-value storages for a few days,
+and today I started reading a paper on [[http://www.vldb.org/pvldb/vldb2010/papers/I04.pdf][FlashStore]].
+As I read through it, I had to google some info about /bloom filters/ and /cuckoo hashing/.
+
+A few notes on bloom filter:
+
+- Bloom filter is a probabilistic data structure that implements a ~set~ abstract data type.
+- Probabilistic means that operations on the DS don't give correct results all the time.
+- Supports ~add~ and ~test~ operations with constant time complexity. ~delete~ is not supported in classic implementation (TODO: investigate).
+- ~test~ deterministically answers if the element is not present in the set but may emit false positives.
+- Bloom filters are implemented as a bitmap and a number of hash functions, which produce bit positions.
+- ~add~ hashes the value with each hash function and sets corresponding bits to 1.
+- To check if an element exists in a set, it is hashed and corresponding bits are compared.
+- The smaller is the load factor, the smaller is the probability of false positives.
+- Applications: quickly check if some data is present on slow storage to avoid reading from it.
+- [[https://www.jasondavies.com/bloomfilter/][Vizualization]].
+
+A bit on cuckoo hashing:
+
+- Implements dictionary abstract data type with worst-case constant time for lookup (compare to traditional hash tables (open addressing/chaining) with linear worst-case lookup).
+- Cuckoo hashing is implemented as two hash tables with independent hash functions thus providing two places where new element can be inserted.
+- Collision occurs when both places are occupated.
+- The collision is resolved with placing the other value at another hash table, hence the name cuckoo: new-born cuckoo birds throw their sibling eggs from the nest (I hadn't known this before!).
+- The process of moving elements lasts until a free cell is found or a loop is detected. In the latter case the table is rehashed.
+** First day using org-mode
+:PROPERTIES:
+:CUSTOM_ID: hello-org
+:END:
+So I decided to maintain a list of tiny notes on programming-related topics, and because I have started using Emacs a few weeks ago, I took up org-mode for this.
+
+Traditional blogging takes much time and skill and so I consider maintaining such a diary a perfect solution if you lack on of these (or both, as I do).
+
+Furthermore, as a side profit, summarizing improves learning productivity.

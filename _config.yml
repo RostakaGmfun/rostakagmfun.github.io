@@ -1,24 +1,10 @@
-# Permalinks
-permalink:        pretty
+# Site settings
+title: RostakaGmfun's blog
+tag_text: Hold my id_rsa
+description: Personal blog of yet another software developer.
 
-# Setup
-title:            Awesome Programmer
-tagline:          Code, cookies, universe
-paginate:         5
-baseurl:          /
-author:
-  name:           Rostyslav Kurylo
-  url:            https://twitter.com/RostakaGmfun
-  email:          rostawesomegd@gmail.com
-
-# Custom vars
-version:          1.0.0
-github:
-  repo:           https://github.com/RostakaGmfun/rostakagmfun.github.io
-description:      The diary of awesome programmer and cool guy. Programming, 3d graphics, c++, gamedev, opengl, linux, coding, rostakagmfun
-desc:             The diary of awesome programmer and cool guy.
-keywords:         programming, 3d graphics, c++, gamedev, OpenGL, linux, coding, rostakagmfun
-motto:            Shooting in the foot does not hurt much if you shoot it at compile time (c)
-
-exclude: [update.sh]
-gems: [jekyll-paginate]
+# Build settings
+markdown: kramdown
+exclude: ["README.md"]
+sass:
+  style: compressed
