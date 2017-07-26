@@ -5,6 +5,16 @@
 
 /Some notes on my daily software development adventures./
 
+** Verifying Multiboot header with grub-file
+:PROPERTIES:
+:CUSTOM_ID: verifying-multiboot-header
+:END:
+As I started doing some bare-metal x86_64 development, I found out a useful tool to verify
+if the GRUB multiboot header is correct. The ~grub-file~ command (In my case, the ~grub2~ package from NixOS channel)
+accepts the executable and returns if it is correct via the exit code, which is is handy to use in automated builds:
+#+BEGIN_SRC bash
+grub-file --is-x86-multiboot my_kernel
+#+END_SRC
 ** Trying out NixOps
 :PROPERTIES:
 :CUSTOM_ID: using-nixops

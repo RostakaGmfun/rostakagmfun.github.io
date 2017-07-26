@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>RostakaGmfun's diary</title>
-<!-- 2017-06-17 Sat 21:00 -->
+<!-- 2017-07-26 Wed 11:21 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -197,6 +197,21 @@ $(function() {
 <i>Some notes on my daily software development adventures.</i>
 </p>
 
+<div id="outline-container-verifying-multiboot-header" class="outline-2">
+<h2 id="verifying-multiboot-header"><a id="sec-" name="sec-"></a>Verifying Multiboot header with grub-file</h2>
+<div class="outline-text-2" id="text-verifying-multiboot-header">
+<p>
+As I started doing some bare-metal x86<sub>64</sub> development, I found out a useful tool to verify
+if the GRUB multiboot header is correct. The <code>grub-file</code> command (In my case, the <code>grub2</code> package from NixOS channel)
+accepts the executable and returns if it is correct via the exit code, which is is handy to use it in automated builds:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">grub-file --is-x86-multiboot my_kernel
+</pre>
+</div>
+</div>
+</div>
 <div id="outline-container-using-nixops" class="outline-2">
 <h2 id="using-nixops"><a id="sec-" name="sec-"></a>Trying out NixOps</h2>
 <div class="outline-text-2" id="text-using-nixops">
@@ -316,6 +331,7 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div><div class="col-md-3"><nav id="table-of-contents">
 <div id="text-table-of-contents" class="bs-docs-sidebar">
 <ul class="nav">
+<li><a href="#verifying-multiboot-header">Verifying Multiboot header with grub-file</a></li>
 <li><a href="#using-nixops">Trying out NixOps</a></li>
 <li><a href="#benchmarking">Benchmarking my kv storage with google/benchmark</a></li>
 <li><a href="#bloom-filters-cuckoo-hashing">Key-value storages, bloom filter and cuckoo hashing</a></li>
@@ -326,7 +342,7 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Rostyslav Kurylo</p>
-<p class="date">Created: 2017-06-17 Sat 21:00</p>
+<p class="date">Created: 2017-07-26 Wed 11:21</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org-mode</a> 9.0.7)</p>
 </div>
 </footer>
