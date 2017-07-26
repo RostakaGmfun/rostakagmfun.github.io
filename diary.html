@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>RostakaGmfun's diary</title>
-<!-- 2017-07-26 Wed 11:21 -->
+<!-- 2017-07-26 Wed 12:53 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -197,13 +197,93 @@ $(function() {
 <i>Some notes on my daily software development adventures.</i>
 </p>
 
+<div id="outline-container-multibyte-i2c-transfer" class="outline-2">
+<h2 id="multibyte-i2c-transfer"><a id="sec-" name="sec-"></a>Mutlibyte transfer over I<sup>2</sup>C bus</h2>
+<div class="outline-text-2" id="text-multibyte-i2c-transfer">
+<p>
+I<sup>2</sup>C bus is a common hardware protocol to communicate with multiple low-speed peripherals located tightly on the board.
+I<sup>2</sup>C is used mostly in the embedded devices
+(one exception known to me is I<sup>2</sup>C-compatible modification called SMBus,
+which is frequently used in laptop and desktop computers to communicate with power management subsystems).
+That is why performance considerations are common when talking about I<sup>2</sup>C-enabled peripherals,
+especially about those that consume or produce lots of data (like different kinds of sensors).
+A minimal unidirectional one-byte transfer of I<sup>2</sup>C communication looks like this:
+</p>
+
+<ol class="org-ol">
+<li>Master sends a START condition bit.
+</li>
+<li>Master sends a 7-bit (or 10-bit) slave address.
+</li>
+<li>Master sends a R/W bit.
+</li>
+<li>Slave sends ACK
+</li>
+<li>Master transfers or accepts an 8-bit packet of data to or form the requested slave.
+</li>
+<li>If the transfer was master-to-slave, the slave sends ACK bit, otherwise the master sends NACK bit.
+</li>
+<li>Master sends a STOP condition bit.
+</li>
+</ol>
+
+<p>
+The number of bits sent is 20 (for 7-bit salve address), so the total overhead to send one byte is 12 bits.
+</p>
+
+<p>
+It is a common case for the master to first write a request (e.g register address) and then accept the reply from the slave.
+This is possible by sending the <i>repeated START condition</i> just after the step 4.
+The repeated START condition is then followed by steps 2-6 resulting in 11 bits overhead per data byte.
+This way, the total overhead to transfer N bytes this way is <code>(1+7+1+1)*N+1</code> bits or <code>11*N+1</code> (for 7-bit slave address).
+</p>
+
+<p>
+A good feature of I<sup>2</sup>C is to transfer multiple (unlimited!) number of bytes without going through the sequence of steps 2-6
+to transfer every byte. This requires some support from the slave, though. The communication will look like this:
+</p>
+
+<ol class="org-ol">
+<li>Master sends a START condition bit.
+</li>
+<li>Master sends a 7-bit (or 10-bit) slave address.
+</li>
+<li>Master sends a R/W bit.
+</li>
+<li>Slave sends ACK.
+</li>
+<li>Master sends repeated START condition bit.
+</li>
+<li>Master transfers or accepts a variable number of 8-bit packets of data to or from the requested slave.
+The number of packets is specified by slave depending on its state.
+For each transferred byte, a single ACK bit is required from master or slave depending on the transfer direction.
+</li>
+<li>Master sends a STOP condition bit.
+</li>
+</ol>
+
+<p>
+In this case, the overhead is only <code>1+7+1+1+N+1</code> bits or <code>11+N</code> bits per byte (for 7-bit slave address).
+</p>
+
+<p>
+As a consequence, to transfer e.g. 32 bytes from the sensor, you will save <code>(11*32+1)-(11+32) = 310</code> bits, which is about 38 bytes
+(even more than you actually intended to transfer!).
+</p>
+
+<p>
+Another great advantage of multi-byte transfer is that it can be issued with the single DMA transaction, which causes more
+efficient utilization of the DMA and gives the CPU more time either do more work or to save more power.
+</p>
+</div>
+</div>
 <div id="outline-container-verifying-multiboot-header" class="outline-2">
 <h2 id="verifying-multiboot-header"><a id="sec-" name="sec-"></a>Verifying Multiboot header with grub-file</h2>
 <div class="outline-text-2" id="text-verifying-multiboot-header">
 <p>
 As I started doing some bare-metal x86<sub>64</sub> development, I found out a useful tool to verify
 if the GRUB multiboot header is correct. The <code>grub-file</code> command (In my case, the <code>grub2</code> package from NixOS channel)
-accepts the executable and returns if it is correct via the exit code, which is is handy to use it in automated builds:
+accepts the executable and returns if it is correct via the exit code, which is is handy to use in automated builds:
 </p>
 <div class="org-src-container">
 
@@ -331,6 +411,7 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div><div class="col-md-3"><nav id="table-of-contents">
 <div id="text-table-of-contents" class="bs-docs-sidebar">
 <ul class="nav">
+<li><a href="#multibyte-i2c-transfer">Mutlibyte transfer over I<sup>2</sup>C bus</a></li>
 <li><a href="#verifying-multiboot-header">Verifying Multiboot header with grub-file</a></li>
 <li><a href="#using-nixops">Trying out NixOps</a></li>
 <li><a href="#benchmarking">Benchmarking my kv storage with google/benchmark</a></li>
@@ -342,7 +423,7 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Rostyslav Kurylo</p>
-<p class="date">Created: 2017-07-26 Wed 11:21</p>
+<p class="date">Created: 2017-07-26 Wed 12:53</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org-mode</a> 9.0.7)</p>
 </div>
 </footer>
