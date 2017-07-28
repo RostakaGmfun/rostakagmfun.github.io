@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>RostakaGmfun's diary</title>
-<!-- 2017-07-26 Wed 12:53 -->
+<!-- 2017-07-29 Sat 01:55 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -197,8 +197,39 @@ $(function() {
 <i>Some notes on my daily software development adventures.</i>
 </p>
 
+<div id="outline-container-pci-overview" class="outline-2">
+<h2 id="pci-overview"><a id="sec-" name="sec-"></a>PCI overview</h2>
+<div class="outline-text-2" id="text-pci-overview">
+<p>
+PCI is a widespread bus protocol for peripheral interconnection usually found on x86 platforms
+(although originally designed with cross-platformness in mind).
+It is quite outdated but I decided to go over it in detail in order to implement a driver for my x86_64 OS
+and then possibly move to the PCIe which is a bit more complicated.
+Below is a short summary of what I have learned so far:
+</p>
+<ul class="org-ul">
+<li>PCI devices are organized into a tree: there are up to 256 buses with up to 32 devices on each bus.
+</li>
+<li>The PCI device can be controlled via the <i>Configuration space</i>. On x86 platform it can be accessed through the two 32-bit I/O ports.
+The first one contains the offset within the Confiuration space and the second one contains the data to be read or written.
+</li>
+<li>On the conventional PCI the size of Configuration space can be as large as 256 bytes, 16 of them (first 4 32-bit registers) are mandatory.
+</li>
+<li>Each PCI device is uniquely identified by its DeviceID, VendorID, Class code, and Subclass code.
+</li>
+<li>The rest of registers are device-dependent. Among them: Base Address Registers (BARs) contain memory spaces
+and/or I/O port spaces which serve as a comunication channels to the PCI device.
+</li>
+<li>The Capabilities pointer is an 4-byte aligned 8-bit address of first entry in the liked list of device <i>capabilities</i> located at the
+tail of Configuration space.
+</li>
+<li>Each entry in capability list contains at least 3 bytes: the ID, the <i>next</i> pointer, and the capability length. The rest is filled with device-specific data.
+</li>
+</ul>
+</div>
+</div>
 <div id="outline-container-multibyte-i2c-transfer" class="outline-2">
-<h2 id="multibyte-i2c-transfer"><a id="sec-" name="sec-"></a>Mutlibyte transfer over I<sup>2</sup>C bus</h2>
+<h2 id="multibyte-i2c-transfer"><a id="sec-" name="sec-"></a>Multibyte transfer over I<sup>2</sup>C bus</h2>
 <div class="outline-text-2" id="text-multibyte-i2c-transfer">
 <p>
 I<sup>2</sup>C bus is a common hardware protocol to communicate with multiple low-speed peripherals located tightly on the board.
@@ -281,7 +312,7 @@ efficient utilization of the DMA and gives the CPU more time either do more work
 <h2 id="verifying-multiboot-header"><a id="sec-" name="sec-"></a>Verifying Multiboot header with grub-file</h2>
 <div class="outline-text-2" id="text-verifying-multiboot-header">
 <p>
-As I started doing some bare-metal x86<sub>64</sub> development, I found out a useful tool to verify
+As I started doing some bare-metal x86_64 development, I found out a useful tool to verify
 if the GRUB multiboot header is correct. The <code>grub-file</code> command (In my case, the <code>grub2</code> package from NixOS channel)
 accepts the executable and returns if it is correct via the exit code, which is is handy to use in automated builds:
 </p>
@@ -411,7 +442,8 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div><div class="col-md-3"><nav id="table-of-contents">
 <div id="text-table-of-contents" class="bs-docs-sidebar">
 <ul class="nav">
-<li><a href="#multibyte-i2c-transfer">Mutlibyte transfer over I<sup>2</sup>C bus</a></li>
+<li><a href="#pci-overview">PCI overview</a></li>
+<li><a href="#multibyte-i2c-transfer">Multibyte transfer over I<sup>2</sup>C bus</a></li>
 <li><a href="#verifying-multiboot-header">Verifying Multiboot header with grub-file</a></li>
 <li><a href="#using-nixops">Trying out NixOps</a></li>
 <li><a href="#benchmarking">Benchmarking my kv storage with google/benchmark</a></li>
@@ -423,7 +455,7 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Rostyslav Kurylo</p>
-<p class="date">Created: 2017-07-26 Wed 12:53</p>
+<p class="date">Created: 2017-07-29 Sat 01:55</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org-mode</a> 9.0.7)</p>
 </div>
 </footer>
