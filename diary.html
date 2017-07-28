@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>RostakaGmfun's diary</title>
-<!-- 2017-07-29 Sat 01:55 -->
+<!-- 2017-07-29 Sat 02:02 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -197,6 +197,17 @@ $(function() {
 <i>Some notes on my daily software development adventures.</i>
 </p>
 
+<div id="outline-container-sec-" class="outline-2">
+<h2 id="sec-">Underscores in org-mode</h2>
+<div class="outline-text-2" id="text-">
+<p>
+I had a trouble with making `x86_64` correctly exported from org-mode to HTML.
+The issue was caused by Org exporting characters after the underscore as subscript line.
+Fortunately, there is an export option `^:` which allows to toggle Tex-like subscript/superscript syntax.
+More info here: <a href="http://orgmode.org/manual/Export-settings.html">http://orgmode.org/manual/Export-settings.html</a>, half way down the page.
+</p>
+</div>
+</div>
 <div id="outline-container-pci-overview" class="outline-2">
 <h2 id="pci-overview"><a id="sec-" name="sec-"></a>PCI overview</h2>
 <div class="outline-text-2" id="text-pci-overview">
@@ -442,6 +453,7 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div><div class="col-md-3"><nav id="table-of-contents">
 <div id="text-table-of-contents" class="bs-docs-sidebar">
 <ul class="nav">
+<li><a href="#sec-">Underscores in org-mode</a></li>
 <li><a href="#pci-overview">PCI overview</a></li>
 <li><a href="#multibyte-i2c-transfer">Multibyte transfer over I<sup>2</sup>C bus</a></li>
 <li><a href="#verifying-multiboot-header">Verifying Multiboot header with grub-file</a></li>
@@ -455,7 +467,7 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Rostyslav Kurylo</p>
-<p class="date">Created: 2017-07-29 Sat 01:55</p>
+<p class="date">Created: 2017-07-29 Sat 02:02</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org-mode</a> 9.0.7)</p>
 </div>
 </footer>

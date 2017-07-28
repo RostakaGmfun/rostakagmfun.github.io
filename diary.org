@@ -5,6 +5,11 @@
 
 /Some notes on my daily software development adventures./
 
+** Underscores in org-mode
+I had a trouble with making `x86_64` correctly exported from org-mode to HTML.
+The issue was caused by Org exporting characters after the underscore as subscript line.
+Fortunately, there is an export option `^:` which allows to toggle Tex-like subscript/superscript syntax.
+More info here: http://orgmode.org/manual/Export-settings.html, half way down the page.
 ** PCI overview
 :PROPERTIES:
 :CUSTOM_ID: pci-overview
