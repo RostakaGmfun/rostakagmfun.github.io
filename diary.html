@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>RostakaGmfun's diary</title>
-<!-- 2017-07-29 Sat 02:02 -->
+<!-- 2017-07-29 Sat 15:05 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -234,7 +234,8 @@ and/or I/O port spaces which serve as a comunication channels to the PCI device.
 <li>The Capabilities pointer is an 4-byte aligned 8-bit address of first entry in the liked list of device <i>capabilities</i> located at the
 tail of Configuration space.
 </li>
-<li>Each entry in capability list contains at least 3 bytes: the ID, the <i>next</i> pointer, and the capability length. The rest is filled with device-specific data.
+<li>Each entry in capability list contains at least 2 bytes: capability id and <i>next</i> pointer (offset in configuration space).
+The rest is device-specific data.
 </li>
 </ul>
 </div>
@@ -467,7 +468,7 @@ Furthermore, as a side profit, summarizing improves learning productivity.
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Rostyslav Kurylo</p>
-<p class="date">Created: 2017-07-29 Sat 02:02</p>
+<p class="date">Created: 2017-07-29 Sat 15:05</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org-mode</a> 9.0.7)</p>
 </div>
 </footer>

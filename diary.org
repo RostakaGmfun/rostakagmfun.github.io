@@ -28,7 +28,8 @@ Below is a short summary of what I have learned so far:
    and/or I/O port spaces which serve as a comunication channels to the PCI device.
  - The Capabilities pointer is an 4-byte aligned 8-bit address of first entry in the liked list of device /capabilities/ located at the
    tail of Configuration space.
- - Each entry in capability list contains at least 3 bytes: the ID, the /next/ pointer, and the capability length. The rest is filled with device-specific data.
+ - Each entry in capability list contains at least 2 bytes: capability id and /next/ pointer (offset in configuration space).
+   The rest is device-specific data.
 ** Multibyte transfer over I^{2}C bus
 :PROPERTIES:
 :CUSTOM_ID: multibyte-i2c-transfer
