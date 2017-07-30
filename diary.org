@@ -26,7 +26,7 @@ Below is a short summary of what I have learned so far:
  - Each PCI device is uniquely identified by its DeviceID, VendorID, Class code, and Subclass code.
  - The rest of registers are device-dependent. Among them: Base Address Registers (BARs) contain memory spaces
    and/or I/O port spaces which serve as a comunication channels to the PCI device.
- - The Capabilities pointer is an 4-byte aligned 8-bit address of first entry in the liked list of device /capabilities/ located at the
+ - The Capabilities pointer is an 4-byte aligned 8-bit address of first entry in the linked list of device /capabilities/ located at the
    tail of Configuration space.
  - Each entry in capability list contains at least 2 bytes: capability id and /next/ pointer (offset in configuration space).
    The rest is device-specific data.
