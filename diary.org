@@ -5,7 +5,32 @@
 
 /Some notes on my daily software development adventures./
 
+** GCC stack protector in Nix
+:PROPERTIES:
+:CUSTOM_ID: gcc-stack-protector
+:END:
+The stack protection feature of C compiler allows to detect stack buffer overflows (either accidental or intentional)
+by placing a magic value at the top of the function stack frame. Just before returning from the function, the magic value is checked,
+and in case it has changed, the program aborts.
+The ~-f-stack-protector~ GCC option will enable the stack protection for all functions which etiher allocate buffer larger
+than 8 bytes on stack (the number of bytes is configurable), or call the ~alloca()~ function.
+
+I run into a problem with this feature while developing my x86_64 OS, since I am not linking to any libraries
+(e.g. libstdc, libgcc, and libssp, which is a Stack Smashing Protection implementation by GCC),
+but the stack protection feature is enabled by default in Nix gcc package. As a result, I got undefined reference to the ~__stack_chk_fail()~ function.
+
+It is, however, possible to control [[https://nixos.org/nixpkgs/manual/#sec-hardening-in-nixpkgs][hardening in Nixpkgs]] with ~hardeningDisable~ / ~hardeningEnable~
+parameters in ~stdenv.mkDerivation~ function.
+
+This worked for me:
+#+BEGIN_SRC nix
+    hardeningDisable = ["stackprotector"];
+#+END_SRC
+
 ** Underscores in org-mode
+:PROPERTIES:
+:CUSTOM_ID: underscores-org-mode
+:END:
 I had a trouble with making `x86_64` correctly exported from org-mode to HTML.
 The issue was caused by Org exporting characters after the underscore as subscript line.
 Fortunately, there is an export option `^:` which allows to toggle Tex-like subscript/superscript syntax.
