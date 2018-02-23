@@ -1,10 +1,22 @@
-# Site settings
-title: RostakaGmfun's blog
-tag_text: Hold my id_rsa
-description: Personal blog of yet another software developer.
+title:   "RostakaGmfun's blog"
+author:
+  name:  'Rostyslav Kurylo'
 
-# Build settings
+url:  'http://rostakagmfun.github.io'
+
+
+########
+# more settings
+
 markdown: kramdown
-exclude: ["README.md"]
+
 sass:
-  style: compressed
+  sass_dir: css
+  style:    expanded
+
+exclude:
+- README.md
+
+
+safe: true
+lsi: false

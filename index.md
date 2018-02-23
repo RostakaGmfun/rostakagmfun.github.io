@@ -1,10 +1,32 @@
 ---
 layout: default
+title: Welcome
 ---
 
-Hi! My name is Rostyslav and I am software developer from Kyiv, Ukraine.
-I am mostly busy with C/C++ application development for Linux, doing embedded development time at a time.
-Furthermore, I try to follow modern trends by learning the Rust programming language.
-I use [NixOS](https://nixos.org) Linux distribution as my primary devbox and write code in Emacs.
+# About
 
-I rarely post longreads, but I ocassionally write small notes in my [diary](diary.html). Check it out!
+Hi!
+
+My name is Rostyslav Kurylo and I am passionate about software, and technology behind it.
+During my work days I am mostly busy with system programming for Linux and embedded platforms,
+and that is also what I like to do in my spare time, though with more experiment and joy :)
+
+I do not pretend to be a generalist, but I like to consider the whole hardware and software stack
+when working on a project and make interesting obsevations about it.
+
+This blog is meant to be a summary of what I've learned so far in the world of software engineering.
+I am always open to discussion and will be glad to know your opinions about my writing.
+
+This blog uses slightly modified [jekyll-minimal-theme](https://github.com/henrythemes/jekyll-minimal-theme).
+
+# Articles
+
+{% for post in site.posts %}
+  <h2 class='post-title'>
+    <a href="{{ site.path }}{{ post.url }}">
+      {{ post.title }}
+    </a>
+  </h2>
+  <div class="post-date">{{ post.date | date: "%b %-d, %Y" }}</div>
+  {{ post.excerpt }}
+{% endfor %}
