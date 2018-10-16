@@ -14,8 +14,8 @@ and that is also what I like to do in my spare time, though with more experiment
 I do not pretend to be a generalist, but I like to consider the whole hardware and software stack
 when working on a project and make interesting obsevations about it.
 
-This blog is meant to be a summary of what I've learned so far in the world of software engineering.
-I am always open to discussion and will be glad to know your opinions about my writing.
+This blog was initially meant to be a summary of what I've learned so far in the world of software engineering,
+but tends to be updated with new contant very rarely, so don't judge it too strictly.
 
 This blog uses slightly modified [jekyll-minimal-theme](https://github.com/henrythemes/jekyll-minimal-theme).
 
